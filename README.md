@@ -1,94 +1,134 @@
+<div align="center">
+
 # IDLEGLANCE-AI
 
-Você gosta muito de algo? Pois eh, eu também;
+![license-info](https://img.shields.io/github/license/Ashu11-A/IDLEGLANCE-AI?logo=gnu&style=for-the-badge&colorA=302D41&colorB=f9e2af&logoColor=f9e2af)
+![stars-info](https://img.shields.io/github/stars/Ashu11-A/IDLEGLANCE-AI?colorA=302D41&colorB=f9e2af&style=for-the-badge)
 
-Dependências:
+![Last-Comitt](https://img.shields.io/github/last-commit/Ashu11-A/IDLEGLANCE-AI?style=for-the-badge&colorA=302D41&colorB=b4befe)
+![Comitts Year](https://img.shields.io/github/commit-activity/y/Ashu11-A/IDLEGLANCE-AI?style=for-the-badge&colorA=302D41&colorB=f9e2af&logoColor=f9e2af)
+![reposize-info](https://img.shields.io/github/repo-size/Ashu11-A/IDLEGLANCE-AI?style=for-the-badge&colorA=302D41&colorB=90dceb)
+
+</div>
+
+*Você gosta muito de algo? Pois eh, eu também;*
+
+### Dependências:
+- nextjs
+- next-video
+- next-auth
+- react-query
 - youtube-dl
 - FFMPEG
-- Nextjs
-- Next-video
-- Prisma or Nestjs 
 - Tensorflow or Pytorch [python]
 
-UI:
-
-Será parecido como uma homepage de Netflix/YouTube entre outros, terá uma contagem regressiva para o próximo vídeo, com base nos últimos 360 dias, e com animações para os últimos 10 segundos ;).
-Os vídeos serão catálogos com as coisas ditas abaixo, cada vídeo será processado individualmente, numa fila não assíncrona.
-As páginas dos vídeos terão uma UI clean e intuitiva, onde será possível baixar a legenda da música, baixar o vídeo ou a música, links de referência para Spotify, author da música...
-
+### UI:
+#### Dependências
 - shacfn/ui
 - radix ui
 - nextui
+- MUI
+#### Sumary
+Será parecido como uma homepage de Netflix/YouTube entre outros, terá uma contagem regressiva para o próximo vídeo, com base nos últimos 360 dias, e com animações para os últimos 10 segundos ;)
 
-Baixar vídeos do YouTube (o vídeo será baixado do YouTube para poder ser processado localmente, os usuários tbm poderão baixar o vídeo, mas diretamente do YouTube, nenhum arquivo será salvo após o processamento!)
+Os vídeos serão catálogos com as coisas ditas abaixo, cada vídeo será processado individualmente, numa fila não assíncrona.
+As páginas dos vídeos terão uma UI clean e intuitiva, onde será possível baixar a legenda da música, baixar o vídeo ou a música, links de referência para Spotify, autor da música...
 
-Cada vídeo terá um score de afinidade com o usuário, assim podendo ter uma melhor experiência com os recomendados
+- [ ] Modo escuro/claro
+- [ ] Perfil do usuário
+- [ ] Páginas individuais para os vídeos
+- [ ] configurações (Qualidade, Linguagem, etc...)
 
-Usuário terá como curti ou não o vídeo, para poder classificar seus gostos
+### Funcionalidades
+- [ ] Baixar vídeos do YouTube (Os usuários poderão baixar o vídeo, mas diretamente do YouTube)
+- [ ] Processamento dos vídeos [OCR - AI - Metadata] (O vídeo será baixado do YouTube para poder ser processado localmente, nenhum vídeo será salvo após o processamento! Apenas seus metadados)
+- [ ] Usuário terá como curtir ou não o vídeo, para poder classificar seus gostos
 
-Transcrição da legenda por OCR, e criação de timeline (descrição já contém a legenda alguma das vezes)
+### Score
+#### Dependências
+- compute-cosine-similarity
+#### Collected data
+- Like
+- View Count
+- Tempo de visualização
+#### Sumary
+- [ ] Cada vídeo terá um score de afinidade com o usuário, assim podendo ter uma melhor experiência com os recomendados
 
-Detecção:
-- Língua do áudio (pela timeline, certas músicas tem diferentes linguagens ao decorrer da música)
-- Fonte da legenda (OCR/IA)
-- Personagens, e personagens principais representados (Banco de imagens)
+### API
+#### Dependências
+- FastAPI (python)
+- Nestjs (javascript)
+#### Database
+- GraphQL
+- Prisma
+#### Sumary
+Maior parte de integração com IA será feito com Python, mas a parte visual será React (Javascript), então para a comunicação com o python, será feito uma API geral
 
-Home:
+### Detecção:
+- [ ] Língua do áudio (pela timeline, certas músicas tem diferentes linguagens ao decorrer da música)
+- [ ] Anime or Real life
+- [ ] Personagens, e personagens principais representados (Banco de imagens)
 
-Catálogo por:
-- Thumbnail semelhantes (IA)
-- Nome do vídeo
-- Author da música
-- Editor (Description or IA)
-- Tags
-- Estilo de edição (IA)
-- Estilo de música
-- Animes usados, anime representado (Banco de imagens), (Possível erro por uso de filtro na edição)
+### Subtitle
+#### Dependências
+- OCR
+- IA
+#### Sumary
+- [ ] Fonte da legenda (OCR/IA)
+- [ ] Transcrição da legenda por OCR, e criação de timeline (descrição já contém a legenda alguma das vezes)
+
+### Home
+#### Catálogo por
+- [ ] Thumbnail semelhantes (IA)
+- [ ] Nome do vídeo
+- [ ] Autor da música
+- [ ] Editor (Description or IA)
+- [ ] Tags
+- [ ] Estilo de edição (IA)
+- [ ] Estilo de música (IA)
+- [ ] Animes usados, anime representado (Banco de imagens), (Possível erro por uso de filtro na edição)
 
 
-Timeline:
+### Timeline:
+- [ ] Animes usados, seus nomes, episódios e time do anime.
 
-Animes usados, seus nomes, episódios e time do anime.
 Contagem de:
-- Transições
-- Cortes
-- Telas pretas
-- Blur
-- Efeitos conhecidos
-- Aproximações e afastamentos
+- [ ] Transições
+- [ ] Cortes
+- [ ] Telas pretas
+- [ ] Blur
+- [ ] Efeitos conhecidos
+- [ ] Aproximações e afastamentos
 
-Referências:
+### Referências:
 
-Timeline:
- https://github.com/xzdarcy/react-timeline-editor
+YouTube API:
+https://developers.google.com/youtube
+
+Timeline: https://github.com/xzdarcy/react-timeline-editor
 
 Search Anime:
-
 https://github.com/soruly/trace.moe
 
 Transcription OCR:
-
  https://github.com/naptha/tesseract.js
+ https://github.com/JaidedAI/EasyOCR
 
 Detect Language:
-
 https://github.com/wooorm/franc
 https://github.com/JohnSnowLabs/spark-nlp
 
 Similar Image:
-
 https://github.com/tomasrasymas/simimg
 https://github.com/visual-layer/fastdup
 https://github.com/shibing624/similarities
 https://github.com/adumrewal/SIFTImageSimilarity
 
 Similar song:
-
 https://github.com/itsbrunodev/similar-songs
 https://github.com/iammordaty/assistant-web
 
 Detect typography:
-
 https://github.com/prnvdixit/Pyfont
 https://github.com/robinreni96/Font_Recognition-DeepFont
 https://github.com/frobertpixto/font-from-image
