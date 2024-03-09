@@ -13,12 +13,16 @@
 
 *Você gosta muito de algo? Pois eh, eu também;*
 
+### Requirements
+- Node >= 21
+- Python >= 3.7
+
 ### Dependências:
 - nextjs
 - next-video
 - next-auth
 - react-query
-- youtube-dl
+- youtube-dl-exec
 - FFMPEG
 - Tensorflow or Pytorch [python]
 
@@ -58,6 +62,8 @@ As páginas dos vídeos terão uma UI clean e intuitiva, onde será possível ba
 #### Dependências
 - FastAPI (python)
 - Nestjs (javascript)
+- @nestjs/bull (javascript)
+- redis
 #### Database
 - GraphQL
 - Prisma
@@ -102,13 +108,20 @@ Contagem de:
 
 ### Referências:
 
+Queue:
+https://medium.com/yavar/nestjs-queues-c8040ca61b79
+
 YouTube API:
 https://developers.google.com/youtube
+https://github.com/LuanRT/YouTube.js
 
 Timeline: https://github.com/xzdarcy/react-timeline-editor
 
 Search Anime:
 https://github.com/soruly/trace.moe
+
+Detect anime:
+https://github.com/hysts/anime-face-detector
 
 Transcription OCR:
  https://github.com/naptha/tesseract.js
