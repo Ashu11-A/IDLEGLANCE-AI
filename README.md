@@ -24,6 +24,7 @@
 - react-query
 - youtube-dl-exec
 - FFMPEG
+- python-shell
 - Tensorflow or Pytorch [python]
 
 ### UI:
@@ -47,6 +48,7 @@ As páginas dos vídeos terão uma UI clean e intuitiva, onde será possível ba
 - [ ] Baixar vídeos do YouTube (Os usuários poderão baixar o vídeo, mas diretamente do YouTube)
 - [ ] Processamento dos vídeos [OCR - AI - Metadata] (O vídeo será baixado do YouTube para poder ser processado localmente, nenhum vídeo será salvo após o processamento! Apenas seus metadados)
 - [ ] Usuário terá como curtir ou não o vídeo, para poder classificar seus gostos
+- [ ] Upscale Thumbnail in 4k
 
 ### Score
 #### Dependências
@@ -55,6 +57,7 @@ As páginas dos vídeos terão uma UI clean e intuitiva, onde será possível ba
 - Like
 - View Count
 - Tempo de visualização
+- Thumbnail
 #### Sumary
 - [ ] Cada vídeo terá um score de afinidade com o usuário, assim podendo ter uma melhor experiência com os recomendados
 
@@ -108,6 +111,9 @@ Contagem de:
 
 ### Referências:
 
+Upscale:
+https://github.com/upscayl/upscayl-ncnn
+
 Queue:
 https://medium.com/yavar/nestjs-queues-c8040ca61b79
 
@@ -122,6 +128,10 @@ https://github.com/soruly/trace.moe
 
 Detect anime:
 https://github.com/hysts/anime-face-detector
+https://huggingface.co/antonioglass/real-or-anime-age
+
+Detect gender anime:
+https://huggingface.co/DOFOFFICIAL/animeGender-dvgg-0.7
 
 Transcription OCR:
  https://github.com/naptha/tesseract.js
@@ -130,6 +140,17 @@ Transcription OCR:
 Detect Language:
 https://github.com/wooorm/franc
 https://github.com/JohnSnowLabs/spark-nlp
+https://huggingface.co/speechbrain/lang-id-voxlingua107-ecapa
+
+Detect type song:
+https://huggingface.co/ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition
+
+Segmentation song:
+https://huggingface.co/pyannote/segmentation
+https://huggingface.co/pyannote/speaker-diarization-3.1
+
+Similar Text:
+https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
 
 Similar Image:
 https://github.com/tomasrasymas/simimg
