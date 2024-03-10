@@ -1,22 +1,23 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UploadModule } from './modules/upload/upload.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { UploadModule } from './rest/upload/upload.module';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './users/users.module';
-import { VideosModule } from './videos/videos.module';
-
+import { Module } from '@nestjs/common';
+import { UsersResolver } from './graphql/users/users.resolver';
+import { PrismaModules } from './prisma/prisma.modules';
 @Module({
   imports: [
     UploadModule,
+    PrismaModules,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env', '.development.env'],
     }),
-    UsersModule,
-    VideosModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+    }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [UsersResolver],
 })
 export class AppModule {}
