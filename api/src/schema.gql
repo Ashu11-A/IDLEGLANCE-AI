@@ -27,6 +27,7 @@ input FindUserByUUID {
 
 type Mutation {
   createUser(data: CreateUserInput!): UserObject!
+  updateUser(data: UpdateUserInput!): UserObject!
 }
 
 input CreateUserInput {
@@ -34,4 +35,11 @@ input CreateUserInput {
   password: String!
   name: String!
   username: String!
+}
+
+input UpdateUserInput {
+  name: String
+  username: String
+  email: String
+  password: String
 }

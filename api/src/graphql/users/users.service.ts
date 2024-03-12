@@ -8,13 +8,14 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserInput } from './dto/inputs/create-user.input';
 import { User } from '@prisma/client';
 import { UserObject } from './dto/objects/user.object';
+import { UpdateUserInput } from './dto/inputs/update-user.input';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async createUser(data: CreateUserInput): Promise<User> {
-    const existUser = this.findUserByEmail(data.email);
+    const existUser = await this.findUserByEmail(data.email);
 
     if (existUser)
       throw new HttpException('Usuário já existe', HttpStatus.CONFLICT);
@@ -25,14 +26,40 @@ export class UsersService {
       });
       return user;
     } catch (err) {
+      console.log(err);
       throw new InternalServerErrorException(
         'Não foi possivel criar o usuário no Banco de dados!',
       );
     }
   }
 
+  async updateUser(data: UpdateUserInput) {
+    const existUser = await this.findUserByEmail(data.email);
+    if (existUser === null)
+      throw new HttpException('Usuário não existe', HttpStatus.NOT_FOUND);
+
+    delete existUser.id; // Evitar erro, o id é imutavel
+
+    try {
+      return await this.prismaService.user.update({
+        where: {
+          ...existUser,
+        },
+        data: {
+          ...existUser,
+          ...data,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerErrorException(
+        'Não foi possivel atualizar os dados do usuário no banco de dados',
+      );
+    }
+  }
+
   async findUserByEmail(email: string): Promise<UserObject> {
-    return await this.prismaService.user.findFirstOrThrow({
+    return await this.prismaService.user.findFirst({
       where: {
         email,
       },

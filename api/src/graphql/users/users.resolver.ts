@@ -4,6 +4,7 @@ import { FindUserByEmail } from './dto/inputs/find-user-email.input';
 import { UserObject } from './dto/objects/user.object';
 import { UsersService } from './users.service';
 import { FindUserByUUID } from './dto/inputs/find-user-uuid.input';
+import { UpdateUserInput } from './dto/inputs/update-user.input';
 
 @Resolver('Users')
 export class UsersResolver {
@@ -27,5 +28,10 @@ export class UsersResolver {
   @Mutation(() => UserObject)
   async createUser(@Args('data') args: CreateUserInput): Promise<UserObject> {
     return await this.usersService.createUser(args);
+  }
+
+  @Mutation(() => UserObject)
+  async updateUser(@Args('data') args: UpdateUserInput) {
+    return this.usersService.updateUser(args);
   }
 }
