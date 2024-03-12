@@ -58,6 +58,20 @@ export class UsersService {
     }
   }
 
+  async deleteUser(uuid: string): Promise<boolean> {
+    return await this.prismaService.user
+      .delete({
+        where: {
+          uuid,
+        },
+      })
+      .then(() => true)
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  }
+
   async findUserByEmail(email: string): Promise<UserObject> {
     return await this.prismaService.user.findFirst({
       where: {

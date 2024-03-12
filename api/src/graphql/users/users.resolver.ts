@@ -35,4 +35,9 @@ export class UsersResolver {
   ) {
     return this.usersService.updateUser(uuid, args);
   }
+
+  @Mutation(() => Boolean)
+  async deleteUser(@Args('uuid') uuid: string) {
+    return await this.usersService.deleteUser(uuid);
+  }
 }
