@@ -1,10 +1,11 @@
-import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { UploadModule } from './rest/upload/upload.module';
-import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { UsersResolver } from './graphql/users/users.resolver';
+import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { UsersModule } from './graphql/users/users.module';
 import { PrismaModules } from './prisma/prisma.modules';
+import { UploadModule } from './rest/upload/upload.module';
 @Module({
   imports: [
     UploadModule,
@@ -15,9 +16,9 @@ import { PrismaModules } from './prisma/prisma.modules';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: true,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    UsersModule,
   ],
-  providers: [UsersResolver],
 })
 export class AppModule {}

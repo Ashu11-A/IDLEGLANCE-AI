@@ -1,0 +1,37 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserObject {
+  id: ID!
+  uuid: String!
+  name: String!
+  username: String!
+  email: String!
+  password: String
+}
+
+type Query {
+  listUsers: [UserObject!]!
+  findEmail(data: FindUserByEmail!): UserObject!
+  findUUID(data: FindUserByUUID!): UserObject!
+}
+
+input FindUserByEmail {
+  email: String!
+}
+
+input FindUserByUUID {
+  uuid: String!
+}
+
+type Mutation {
+  createUser(data: CreateUserInput!): UserObject!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  name: String!
+  username: String!
+}
