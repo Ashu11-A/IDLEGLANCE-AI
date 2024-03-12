@@ -9,30 +9,56 @@
 ![Comitts Year](https://img.shields.io/github/commit-activity/y/Ashu11-A/IDLEGLANCE-AI?style=for-the-badge&colorA=302D41&colorB=f9e2af&logoColor=f9e2af)
 ![reposize-info](https://img.shields.io/github/repo-size/Ashu11-A/IDLEGLANCE-AI?style=for-the-badge&colorA=302D41&colorB=90dceb)
 
+*Um projeto que visa criar uma plataforma similar a Netflix/YouTube para conteúdos específicos, com foco em funcionalidades avançadas de IA e personalização.*
+
 </div>
 
-*Você gosta muito de algo? Pois eh, eu também;*
+### Processamento de Vídeos
+- [ ] Baixar vídeos do YouTube (Os usuários poderão baixar o vídeo, mas diretamente do YouTube)
+- [ ] Processamento local dos vídeos (OCR - AI - Metadata) (Nenhum vídeo será salvo após o processamento! Apenas seus metadados)
+- [ ] Curtida/descurtida de vídeos para classificação.
+- [ ] Upscale de thumbnails para 4k
 
-### Requirements
-- Node >= 21
-- Python >= 3.7
+### Score de Afinidade
+#### Collected data
+- [ ] Like
+- [ ] View Count
+- [ ] Tempo de visualização
+- [ ] Thumbnail
+#### Sumary
+- [ ] Cálculo de similaridade entre vídeos e usuário
+- [ ] Consideração de curtidas, visualizações, tempo de visualização, thumbnails
+- [ ] Recomendações personalizadas
 
-### Dependências:
-- nextjs
-- next-video
-- next-auth
-- react-query
-- youtube-dl-exec
-- FFMPEG
-- python-shell
-- Tensorflow or Pytorch [python]
+### API
+#### Dependências
+- [ ] FastAPI (python)
+- [x] Nestjs (javascript)
+- [ ] @nestjs/bull (javascript)
+- [ ] Redis
+#### Database
+- GraphQL
+- Prisma
+#### Sumary
+- [x] Banco de dados GraphQL/Rest com Prisma
+- [x] Tabela de: Usuários, Vídeos...
+- [ ] Integração com Python para IA
+
+### Detecção
+- [ ] Língua do áudio (com reconhecimento de mudanças ao longo da música)
+- [ ] Tipo de conteúdo (Anime or Real life)
+- [ ] Personagens, e personagens principais representados (Banco de imagens)
+
+### Legendas
+- [ ] Fonte da legenda (OCR/IA)
+- [ ] Extração de legendas por OCR e IA
 
 ### UI:
 #### Dependências
-- shacfn/ui
-- radix ui
-- nextui
-- MUI
+- [ ] Tailwindcss
+- [ ] shacfn/ui
+- [ ] radix ui
+- [ ] MUI
 #### Sumary
 Será parecido como uma homepage de Netflix/YouTube entre outros, terá uma contagem regressiva para o próximo vídeo, com base nos últimos 360 dias, e com animações para os últimos 10 segundos ;)
 
@@ -42,52 +68,11 @@ As páginas dos vídeos terão uma UI clean e intuitiva, onde será possível ba
 - [ ] Modo escuro/claro
 - [ ] Perfil do usuário
 - [ ] Páginas individuais para os vídeos
-- [ ] configurações (Qualidade, Linguagem, etc...)
-
-### Funcionalidades
-- [ ] Baixar vídeos do YouTube (Os usuários poderão baixar o vídeo, mas diretamente do YouTube)
-- [ ] Processamento dos vídeos [OCR - AI - Metadata] (O vídeo será baixado do YouTube para poder ser processado localmente, nenhum vídeo será salvo após o processamento! Apenas seus metadados)
-- [ ] Usuário terá como curtir ou não o vídeo, para poder classificar seus gostos
-- [ ] Upscale Thumbnail in 4k
-
-### Score
-#### Dependências
-- compute-cosine-similarity
-#### Collected data
-- Like
-- View Count
-- Tempo de visualização
-- Thumbnail
-#### Sumary
-- [ ] Cada vídeo terá um score de afinidade com o usuário, assim podendo ter uma melhor experiência com os recomendados
-
-### API
-#### Dependências
-- FastAPI (python)
-- Nestjs (javascript)
-- @nestjs/bull (javascript)
-- redis
-#### Database
-- GraphQL
-- Prisma
-#### Sumary
-Maior parte de integração com IA será feito com Python, mas a parte visual será React (Javascript), então para a comunicação com o python, será feito uma API geral
-
-### Detecção:
-- [ ] Língua do áudio (pela timeline, certas músicas tem diferentes linguagens ao decorrer da música)
-- [ ] Anime or Real life
-- [ ] Personagens, e personagens principais representados (Banco de imagens)
-
-### Subtitle
-#### Dependências
-- OCR
-- IA
-#### Sumary
-- [ ] Fonte da legenda (OCR/IA)
-- [ ] Transcrição da legenda por OCR, e criação de timeline (descrição já contém a legenda alguma das vezes)
+- [ ] Configurações (Qualidade, Linguagem, etc...)
+- [ ] Criação de timeline
 
 ### Home
-#### Catálogo por
+#### Catálogo por diversos critérios
 - [ ] Thumbnail semelhantes (IA)
 - [ ] Nome do vídeo
 - [ ] Autor da música
@@ -99,8 +84,7 @@ Maior parte de integração com IA será feito com Python, mas a parte visual se
 
 
 ### Timeline:
-- [ ] Animes usados, seus nomes, episódios e time do anime.
-
+- [ ] Identificação de animes usados, seus nomes, episódios e tempo no anime
 Contagem de:
 - [ ] Transições
 - [ ] Cortes
@@ -109,60 +93,87 @@ Contagem de:
 - [ ] Efeitos conhecidos
 - [ ] Aproximações e afastamentos
 
+### Requirements
+- Node >= 21
+- Python >= 3.7
+
+### Dependências:
+- nextjs
+- next-video
+- next-auth
+- youtube-dl-exec
+- FFMPEG
+- python-shell
+- Tensorflow or Pytorch [python]
+- React Hook Form
+#### Test
+- JestJS
+- React Testing Library
+- Cypress
+#### Animation
+- Framer Motion
+#### Charts
+- Recharts
+- React Chartjs 2
+#### Cache
+- Zustand
+- Context API
+- React Query
+
 ### Referências:
 
-Upscale:
+#### Upscale:
 https://github.com/upscayl/upscayl-ncnn
 
-Queue:
+#### Queue:
 https://medium.com/yavar/nestjs-queues-c8040ca61b79
 
-YouTube API:
+#### YouTube API:
 https://developers.google.com/youtube
 https://github.com/LuanRT/YouTube.js
 
-Timeline: https://github.com/xzdarcy/react-timeline-editor
+#### Timeline: https://github.com/xzdarcy/react-timeline-editor
 
-Search Anime:
+#### Search Anime:
 https://github.com/soruly/trace.moe
 
-Detect anime:
+#### Detect anime:
 https://github.com/hysts/anime-face-detector
 https://huggingface.co/antonioglass/real-or-anime-age
 
-Detect gender anime:
+#### Detect gender anime:
 https://huggingface.co/DOFOFFICIAL/animeGender-dvgg-0.7
 
-Transcription OCR:
+#### Transcription OCR:
  https://github.com/naptha/tesseract.js
  https://github.com/JaidedAI/EasyOCR
 
-Detect Language:
+#### Detect Language:
 https://github.com/wooorm/franc
 https://github.com/JohnSnowLabs/spark-nlp
 https://huggingface.co/speechbrain/lang-id-voxlingua107-ecapa
 
-Detect type song:
+#### Detect type song:
 https://huggingface.co/ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition
 
-Segmentation song:
+#### Segmentation song:
 https://huggingface.co/pyannote/segmentation
 https://huggingface.co/pyannote/speaker-diarization-3.1
 
-Similar Text:
+#### Similar Text:
 https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
 
-Similar Image:
+#### Similar Image:
 https://github.com/tomasrasymas/simimg
 https://github.com/visual-layer/fastdup
 https://github.com/shibing624/similarities
 https://github.com/adumrewal/SIFTImageSimilarity
 
-Similar song:
+#### Similar song:
 https://github.com/itsbrunodev/similar-songs
 https://github.com/iammordaty/assistant-web
 
-Detect typography:
+#### Detect typography:
 https://github.com/prnvdixit/Pyfont
 https://github.com/robinreni96/Font_Recognition-DeepFont
 https://github.com/frobertpixto/font-from-image
