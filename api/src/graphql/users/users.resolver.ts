@@ -1,10 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateUserInput } from './dto/inputs/create-user.input';
-import { FindUserByEmail } from './dto/inputs/find-user-email.input';
+import { UpdateUserInput } from './dto/inputs/update-user.input';
 import { UserObject } from './dto/objects/user.object';
 import { UsersService } from './users.service';
-import { FindUserByUUID } from './dto/inputs/find-user-uuid.input';
-import { UpdateUserInput } from './dto/inputs/update-user.input';
 
 @Resolver('Users')
 export class UsersResolver {
@@ -16,13 +14,13 @@ export class UsersResolver {
   }
 
   @Query(() => UserObject)
-  async findEmail(@Args('data') args: FindUserByEmail) {
-    return await this.usersService.findUserByEmail(args.email);
+  async findEmail(@Args('email') email: string) {
+    return await this.usersService.findUserByEmail(email);
   }
 
   @Query(() => UserObject)
-  async findUUID(@Args('data') args: FindUserByUUID) {
-    return await this.usersService.findUserByUUID(args.uuid);
+  async findUUID(@Args('uuid') uuid: string) {
+    return await this.usersService.findUserByUUID(uuid);
   }
 
   @Mutation(() => UserObject)
@@ -31,7 +29,10 @@ export class UsersResolver {
   }
 
   @Mutation(() => UserObject)
-  async updateUser(@Args('data') args: UpdateUserInput) {
-    return this.usersService.updateUser(args);
+  async updateUser(
+    @Args('uuid') uuid: string,
+    @Args('data') args: UpdateUserInput,
+  ) {
+    return this.usersService.updateUser(uuid, args);
   }
 }

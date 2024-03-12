@@ -13,21 +13,13 @@ type UserObject {
 
 type Query {
   listUsers: [UserObject!]!
-  findEmail(data: FindUserByEmail!): UserObject!
-  findUUID(data: FindUserByUUID!): UserObject!
-}
-
-input FindUserByEmail {
-  email: String!
-}
-
-input FindUserByUUID {
-  uuid: String!
+  findEmail(email: String!): UserObject!
+  findUUID(uuid: String!): UserObject!
 }
 
 type Mutation {
   createUser(data: CreateUserInput!): UserObject!
-  updateUser(data: UpdateUserInput!): UserObject!
+  updateUser(uuid: String!, data: UpdateUserInput!): UserObject!
 }
 
 input CreateUserInput {

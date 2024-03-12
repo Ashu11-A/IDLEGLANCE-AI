@@ -33,8 +33,8 @@ export class UsersService {
     }
   }
 
-  async updateUser(data: UpdateUserInput) {
-    const existUser = await this.findUserByEmail(data.email);
+  async updateUser(uuid: string, data: UpdateUserInput) {
+    const existUser = await this.findUserByUUID(uuid);
     if (existUser === null)
       throw new HttpException('Usuário não existe', HttpStatus.NOT_FOUND);
 
