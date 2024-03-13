@@ -4,7 +4,7 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { CreateUserInput } from './dto/inputs/create-user.input';
 import { User } from '@prisma/client';
 import { UserObject } from './dto/objects/user.object';
@@ -59,17 +59,15 @@ export class UsersService {
   }
 
   async deleteUser(uuid: string): Promise<boolean> {
-    return await this.prismaService.user
-      .delete({
-        where: {
-          uuid,
-        },
-      })
-      .then(() => true)
-      .catch((err) => {
-        console.log(err);
-        return false;
-      });
+    const response = await this.prismaService.user.delete({
+      where: {
+        uuid,
+      },
+    });
+    if (response) {
+      return true;
+    }
+    return false;
   }
 
   async findUserByEmail(email: string): Promise<UserObject> {
