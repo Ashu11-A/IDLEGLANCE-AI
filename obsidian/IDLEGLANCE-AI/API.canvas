@@ -1,1 +1,20 @@
-{}
+{
+	"nodes":[
+		{"id":"d6d7260a11eba26e","x":-680,"y":-300,"width":1115,"height":373,"type":"group","label":"API"},
+		{"id":"569511fa8309c77d","type":"text","text":"GraphQL","x":145,"y":-157,"width":140,"height":50},
+		{"id":"601a3d89680e4d40","type":"text","text":"Animes","x":285,"y":-9,"width":120,"height":50},
+		{"id":"ad04723b1ed8a83e","type":"text","text":"Users","x":20,"y":-9,"width":125,"height":50},
+		{"id":"bbee9c485a8b9e0a","type":"text","text":"Auth","x":-549,"y":-139,"width":105,"height":50},
+		{"id":"0d622bb28790e6ee","type":"text","text":"Login","x":-660,"y":-9,"width":111,"height":50},
+		{"id":"04e102eb412f26c8","type":"text","text":"Register","x":-444,"y":-9,"width":135,"height":50},
+		{"id":"da2a451d73d29571","type":"text","text":"Rest","x":-556,"y":-262,"width":120,"height":50}
+	],
+	"edges":[
+		{"id":"c49a71dfa38c60c2","fromNode":"569511fa8309c77d","fromSide":"bottom","toNode":"ad04723b1ed8a83e","toSide":"top"},
+		{"id":"c9f602138983996d","fromNode":"569511fa8309c77d","fromSide":"bottom","toNode":"601a3d89680e4d40","toSide":"top"},
+		{"id":"614f2c430e14dd2b","fromNode":"bbee9c485a8b9e0a","fromSide":"bottom","toNode":"0d622bb28790e6ee","toSide":"top"},
+		{"id":"94e20d4e05b09276","fromNode":"bbee9c485a8b9e0a","fromSide":"bottom","toNode":"04e102eb412f26c8","toSide":"top"},
+		{"id":"722f49a580951254","fromNode":"da2a451d73d29571","fromSide":"bottom","toNode":"bbee9c485a8b9e0a","toSide":"top"},
+		{"id":"40cb75255d8de243","fromNode":"04e102eb412f26c8","fromSide":"right","toNode":"ad04723b1ed8a83e","toSide":"left"}
+	]
+}
