@@ -6,6 +6,7 @@ import { join } from 'path';
 import { UsersModule } from './graphql/users/users.module';
 import { PrismaModules } from './prisma/prisma.modules';
 import { UploadModule } from './rest/upload/upload.module';
+import { AuthModule } from './graphql/auth/auth.module';
 @Module({
   imports: [
     UploadModule,
@@ -17,8 +18,10 @@ import { UploadModule } from './rest/upload/upload.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      context: ({ req }) => ({ req }),
     }),
     UsersModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

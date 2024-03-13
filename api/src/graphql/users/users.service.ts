@@ -4,15 +4,21 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { genSaltSync, hashSync } from 'bcrypt';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateUserInput } from './dto/inputs/create-user.input';
-import { User } from '@prisma/client';
-import { UserObject } from './dto/objects/user.object';
 import { UpdateUserInput } from './dto/inputs/update-user.input';
+import { UserObject } from './dto/objects/user.object';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async passwordCrypt(password: string): Promise<string> {
+    const salt = genSaltSync(10);
+    return hashSync(password, salt);
+  }
 
   async createUser(data: CreateUserInput): Promise<User> {
     const existUser = await this.findUserByEmail(data.email);
@@ -22,7 +28,10 @@ export class UsersService {
 
     try {
       const user = await this.prismaService.user.create({
-        data,
+        data: {
+          ...data,
+          password: await this.passwordCrypt(data.password),
+        },
       });
       return user;
     } catch (err) {
@@ -48,6 +57,9 @@ export class UsersService {
         data: {
           ...existUser,
           ...data,
+          password: data?.password
+            ? await this.passwordCrypt(data.password)
+            : existUser.password,
         },
       });
     } catch (err) {
@@ -59,6 +71,9 @@ export class UsersService {
   }
 
   async deleteUser(uuid: string): Promise<boolean> {
+    const existeUser = await this.findUserByEmail(uuid);
+    if (existeUser === null) return false;
+
     const response = await this.prismaService.user.delete({
       where: {
         uuid,

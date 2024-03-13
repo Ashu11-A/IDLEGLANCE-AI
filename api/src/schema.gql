@@ -8,7 +8,11 @@ type UserObject {
   name: String!
   username: String!
   email: String!
-  password: String
+}
+
+type AuthObject {
+  user: UserObject!
+  acessToken: String!
 }
 
 type Query {
@@ -21,6 +25,7 @@ type Mutation {
   createUser(data: CreateUserInput!): UserObject!
   updateUser(uuid: String!, data: UpdateUserInput!): UserObject!
   deleteUser(uuid: String!): Boolean!
+  login(data: AuthInput!): AuthObject!
 }
 
 input CreateUserInput {
@@ -35,4 +40,9 @@ input UpdateUserInput {
   username: String
   email: String
   password: String
+}
+
+input AuthInput {
+  email: String!
+  password: String!
 }
