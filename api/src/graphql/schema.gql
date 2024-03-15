@@ -1,0 +1,48 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserObject {
+  id: ID!
+  uuid: String!
+  name: String!
+  username: String!
+  email: String!
+}
+
+type AuthObject {
+  user: UserObject!
+  acessToken: String!
+}
+
+type Query {
+  listUsers: [UserObject!]!
+  findEmail(email: String!): UserObject!
+  findUUID(uuid: String!): UserObject!
+}
+
+type Mutation {
+  createUser(data: CreateUserInput!): UserObject!
+  updateUser(uuid: String!, data: UpdateUserInput!): UserObject!
+  deleteUser(uuid: String!): Boolean!
+  login(data: AuthInput!): AuthObject!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  name: String!
+  username: String!
+}
+
+input UpdateUserInput {
+  name: String
+  username: String
+  email: String
+  password: String
+}
+
+input AuthInput {
+  email: String!
+  password: String!
+}
