@@ -1,7 +1,7 @@
 import Player from '@/components/player/Player';
 
 export default async function Home() {
-  const codeVideo = 'GLR1nzQDero'
+  const codeVideo = '_HbgYkWeZfQ'
   // console.log(await getVideo(codeVideo))
 
     // const { isFetching, error, data } = useQuery({
