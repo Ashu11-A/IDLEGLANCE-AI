@@ -1,8 +1,21 @@
 import Player from '@/components/player/Player';
+import axios from 'axios';
+import { MoreVideoDetails } from 'ytdl-core'
+import { YoutubeVideoFormat } from '../../api/src/rest/videos/dto/youtube.types';
+
+interface ApiResponse extends MoreVideoDetails {
+  bestQualityAudio: YoutubeVideoFormat,
+  bestQualityVideo: YoutubeVideoFormat,
+  streamingData: YoutubeVideoFormat[]
+}
 
 export default async function Home() {
   const codeVideo = '_HbgYkWeZfQ'
-  // console.log(await getVideo(codeVideo))
+
+  const video = await axios.post('http://localhost:3333/videos/info', {
+    provider: "youtube",
+    url: "https://www.youtube.com/watch?v=53SIcnlWiSU"
+  }).then((res) => res.data as ApiResponse)
 
     // const { isFetching, error, data } = useQuery({
     //   queryKey: [`${codeVideo}`],
@@ -24,37 +37,14 @@ export default async function Home() {
     //   }
     // )
 
+    // await getVideo(codeVideo)
 
   return (
     <div className='flex justify-center items-center min-h-screen'>
       <Player
-        id={codeVideo}
+        urlVideo={video.bestQualityVideo.url}
+        urlAudio={video.bestQualityAudio.url}
       />
     </div>
   )
-  // return (
-  //   <div>
-  //     <p>URL: {data?.url}</p>
-  //     <ReactPlayer
-  //       url={data ? data.url : undefined}
-  //       controls
-  //       loop
-  //       // config={{
-  //       //   playerVars: {
-  //       //     controls: 1,
-  //       //     frameborder: 0,
-  //       //     cc_load_policy: 0, // legendas ativadas
-  //       //     iv_load_policy: 0,
-  //       //     loop: 1,
-  //       //     modestbranding: 1, // Logo do Youtube
-  //       //     rel: 0, // videos recomendados
-  //       //     showinfo: 0 // Esconder nome do Video
-  //       //   },
-  //       //   embedOptions: {
-
-  //       //   }
-  //       // }}
-  //     />
-  //   </div>
-  // );
 }

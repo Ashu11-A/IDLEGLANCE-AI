@@ -1,6 +1,5 @@
 import { formatTime } from "@/functions/formatTime";
-import { MouseEvent, RefObject, memo, useCallback, useRef, useState } from "react";
-import ReactPlayer from "react-player";
+import { MouseEvent, memo, useCallback, useRef, useState } from "react";
 
 function ProgressBar({ currentTime, duration, seekTo }: { currentTime: number, duration: number, seekTo: (time: number) => void }) {    
     const [MouseEnter, setMouseEnter] = useState(false)

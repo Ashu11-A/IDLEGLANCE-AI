@@ -31,8 +31,7 @@
     "react-use": "^17.5.0",
     "screenfull": "^6.0.2",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7",
-    "youtube-dl-exec": "^2.5.7"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",

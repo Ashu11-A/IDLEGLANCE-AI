@@ -8,33 +8,53 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { findDOMNode } from 'react-dom'
 import { useInView } from "react-intersection-observer"
 import ReactPlayer from "react-player"
-import { useKeyPress, useKeyPressEvent } from 'react-use'
+import { useAudio, useKeyPress, useKeyPressEvent } from 'react-use'
 import screenfull from 'screenfull'
-import { InternalPlayerType } from "./Player.d.js"
 import ProgressBar from './ProgressBar'
 
-export default function Player({ id }: { id: string }) {
-    const { ref, inView } = useInView({ threshold: 1 })
+export default function Player({ urlVideo, urlAudio }: { urlVideo: string, urlAudio: string }) {
+    const { ref: refView, inView } = useInView({ threshold: 1 })
     const playerRef = useRef<ReactPlayer>(null)
+    const properties = useRef({
+        progress: 0,
+        duration: 0,
+        volume: 0,
+        muted: false,
+        playing: false
+    })
+    const cataCollector = useRef({
+        screenTime: 0,
+        timePlaying: 0
+    })
 
+    const [audio, state, controls] = useAudio({ src: urlAudio })
 
+    state.volume = 100
+    state.paused = false
     const [playing, setPlaying] = useState(false)
-    const [progress, setProgress] = useState(0)
-    const [duration, setDuration] = useState(0)
 
     const [MouseEnter, setMouseEnter] = useState(false)
 
     // Data Collector
-    const [screenTime, setScreenTime] = useState(0)
-    const [timePlaying, setTimePlaying] = useState(0)
+    const getScreenTime = useCallback(() => cataCollector.current.screenTime, [cataCollector])
+    const setScreenTime = useCallback((time: number) => cataCollector.current.screenTime = time, [cataCollector])
+
+    const getTimePlaying = useCallback(() => cataCollector.current.timePlaying, [cataCollector])
+    const setTimePlaying = useCallback((time: number) => cataCollector.current.timePlaying = time, [cataCollector])
+
     const windowVisible = useVisibilityChange()
 
-    const internalPlayer = useCallback(() => {
-        return playerRef.current?.getInternalPlayer() as InternalPlayerType | null
-    }, [playerRef])
+    // playerRef.current?.setState()
     const seekTo = useCallback((time: number) => playerRef.current?.seekTo(time, 'seconds'), [playerRef])
-    const setVolume = useCallback((volume: number) => internalPlayer()?.setVolume(volume), [internalPlayer])
-    const getVolume = useCallback((): number => internalPlayer()?.getVolume() ?? 0, [internalPlayer])
+
+    // Volume
+    const setVolume = useCallback((volume: number) => properties.current.volume = volume, [properties])
+    const getVolume = useCallback((): number => properties.current.volume ?? 0, [properties])
+    const muteToggle = useCallback(() => properties.current.muted = !properties.current.muted, [properties])
+
+    // Time Player
+    const getDuration = useCallback((): number => properties.current.duration, [properties])
+    const setDuration = useCallback((duration: number): number => properties.current.duration = duration, [properties])
     const getCurrentTime = useCallback((): number => playerRef.current?.getCurrentTime() ?? 0, [playerRef])
 
     const play = useCallback(() => setPlaying((prev) => !prev), [])
@@ -42,16 +62,8 @@ export default function Player({ id }: { id: string }) {
 
 
     useKeyPressEvent(' ',/* <-- Key Space */ () => setPlaying((prev) => !prev))
-    useKeyPressEvent('k', () => console.log(internalPlayer()))
-    useKeyPressEvent('m', () => {
-        const isMuted = internalPlayer()?.isMuted()
-        console.log(`Press: M, Muted: ${!isMuted}`)
-        if (isMuted) {
-            internalPlayer()?.unMute()
-        } else {
-            internalPlayer()?.mute()
-        }
-    })
+    useKeyPressEvent('k', () => console.log(playerRef, state, audio))
+    useKeyPressEvent('m', () => muteToggle())
     // Esses botões podem ser spamados por isso tem que ser useKeyPress
     const ArrowUpPress = useKeyPress('ArrowUp')
     const ArrowDownPress = useKeyPress('ArrowDown')
@@ -70,39 +82,39 @@ export default function Player({ id }: { id: string }) {
     useEffect(() => {
         if (playing) {
             const playingInterval = setInterval(() => {
-                setTimePlaying((prev) => prev+1)
+                setTimePlaying(getTimePlaying() +1)
             }, 1000)
 
             return () => clearInterval(playingInterval)
         }
-    }, [playing, inView])
+    }, [playing, inView, setTimePlaying, getTimePlaying])
 
     useEffect(() => {
         if (inView && windowVisible) {
             const screen = setInterval(() => {
-                setScreenTime((prev) => prev+1)
+                setScreenTime(getScreenTime() +1)
             }, 1000)
 
             return () => clearInterval(screen)
         }
-    }, [inView, windowVisible])
+    }, [getScreenTime, inView, setScreenTime, windowVisible])
 
     return (
         <div>
             {inView && <p>Player em Tela</p>}
-            <p>Tempo de tela: {screenTime}</p>
-            <p>Tempo de assistido: {timePlaying}</p>
+            <p>Tempo de tela: {getScreenTime()}</p>
+            <p>Tempo de assistido: {getTimePlaying()}</p>
             <p>{playing ? 'Reproduzindo Video' : 'Video pausado'}</p>
             {MouseEnter ? <p>Mouse em cima do player</p> : <p>Mouse fora do player</p>}
             <div
-                ref={ref}
+                ref={refView}
                 className='flex w-[1280px] h-[720px] border-0 rounded-2xl relative overflow-hidden'
                 onMouseEnter={() => setMouseEnter(true)}
                 onMouseLeave={() => setMouseEnter(false)}
                 tabIndex={0}
             >
                 <ReactPlayer
-                    url={`https://www.youtube.com/watch?v=${id}`}
+                    url={urlVideo}
                     ref={playerRef}
                     playing={playing}
                     // light="https://i.ytimg.com/vi/GLR1nzQDero/maxresdefault.jpg"
@@ -111,22 +123,19 @@ export default function Player({ id }: { id: string }) {
                     onPlay={() => setPlaying(true)}
                     width={1280}
                     height={720}
-                    controls
-                    config={{
-                        youtube: {
-                            playerVars: { controls: 0, modestbranding: 1, showinfo: 0, rel: 0 },
-                        },
-                    }}
-                    onProgress={(progressProps) => setProgress(progressProps.playedSeconds)}
-                    onDuration={(duration) => setDuration((prev) => (duration !== prev) ? duration : prev)}
+                    muted={properties.current.muted}
+                    volume={properties.current.volume}
+                    onProgress={(progressProps) => properties.current.progress = progressProps.playedSeconds}
+                    onDuration={(duration) => setDuration(duration)}
                 />
+                {audio}
                 <div
                     className={
                         `w-full absolute bottom-0 z-10 ${(MouseEnter && (playing === true)) ||
                             (playing === false) ? 'opacity-100' : 'opacity-0'} transition ease-in-out duration-250 delay-50`
                     }
                 >
-                    <ProgressBar currentTime={progress} duration={duration} seekTo={seekTo} />
+                    <ProgressBar currentTime={properties.current.progress} duration={getDuration()} seekTo={seekTo} />
                     <div className='w-full h-10 gap flex flex-row items-center justify-between'>
                         <div className='flex flex-row'>
                             <button
@@ -137,7 +146,7 @@ export default function Player({ id }: { id: string }) {
                                     ? <Icon color={'white'} path={mdiPause} size={'2rem'} />
                                     : <Icon color={'white'} path={mdiPlay} size={'2rem'} />}
                             </button>
-                            <div className='flex items-center font-medium text-sm text-white'>{formatTime(progress)} / {formatTime(playerRef.current?.getDuration() ?? 0)}</div>
+                            <div className='flex items-center font-medium text-sm text-white'>{formatTime(properties.current.progress)} / {formatTime(playerRef.current?.getDuration() ?? 0)}</div>
                         </div>
                         <button
                             onClick={onClickFullscreen}
@@ -148,6 +157,7 @@ export default function Player({ id }: { id: string }) {
                     </div>
                 </div>
             </div>
+            <button onClick={() => controls.play()}>Reproduzir Musica</button>
         </div>
     )
 }
