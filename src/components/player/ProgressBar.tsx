@@ -14,9 +14,6 @@ function ProgressBar({ currentTime, duration, seekTo }: { currentTime: number, d
         const newProgress = clickX / (refDiv.current?.offsetWidth ?? 0); //  calcula a nova posição do clique como uma porcentagem da largura total da linha
         const newTime = newProgress * duration; // Esta linha converte a nova posição do clique em segundos
 
-        // console.log(`${clientX} - ${refDiv.current?.getBoundingClientRect().left ?? 0}: ${clickX}`)
-        // console.log(`${clickX} / ${refDiv.current?.offsetWidth ?? 0}: ${newProgress}`)
-        // console.log(`${newProgress} * ${total}: ${newTime}`)
         setMouseX(clickX)
         return newTime
     }, [duration])

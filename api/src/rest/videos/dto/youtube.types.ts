@@ -38,3 +38,9 @@ export enum VideoQuality {
   '4K' = 'hd2160',
   MAX = 'highres',
 }
+
+export interface ThumbnailsData {
+  url: string;
+  width: number;
+  height: number;
+}

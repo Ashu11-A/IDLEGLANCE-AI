@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { writeFileSync } from 'fs';
 import { VideoFormatQuality, getInfo, validateURL } from 'ytdl-core';
-import { YoutubeVideoFormat } from './dto/youtube.types';
+import { ThumbnailsData, YoutubeVideoFormat } from './dto/youtube.types';
 
 @Injectable()
 export class VideosService {
@@ -46,6 +46,8 @@ export class VideosService {
       const videoinfo = await getInfo(url);
       const adaptiveFormats = videoinfo.player_response.streamingData
         .adaptiveFormats as YoutubeVideoFormat[];
+      const thumbnails = videoinfo.videoDetails.thumbnails as ThumbnailsData[];
+
       const bestQualityVideo = adaptiveFormats.reduce((best, current) => {
         if (current.mimeType.toLowerCase().startsWith('video/')) {
           return current.width * current.height + current.bitrate >
@@ -64,14 +66,18 @@ export class VideosService {
             : best;
         }
       }, adaptiveFormats[0]);
-
-      console.log(bestQualityVideo, bestQualityAudio);
+      const bestThumbnail = thumbnails.reduce((best, current) => {
+        return current.width + current.height > best.width + best.height
+          ? current
+          : best;
+      });
 
       return {
         ...videoinfo.videoDetails,
         availableCountries: undefined,
         bestQualityAudio,
         bestQualityVideo,
+        bestThumbnail,
         streamingData: [...adaptiveFormats],
       };
     }
