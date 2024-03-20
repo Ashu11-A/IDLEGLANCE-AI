@@ -4,10 +4,11 @@ import Player from "@/components/player/Player"
 import axios from "axios"
 import { ThumbnailsData, YoutubeVideoFormat } from "../../../api/dist/rest/videos/dto/youtube.types"
 import { MoreVideoDetails } from 'ytdl-core'
+import { redirect } from 'next/navigation'
 
 interface VideoPageType {
     searchParams: {
-        id: string
+        id?: string
     }
 }
 
@@ -20,6 +21,8 @@ interface ApiResponse extends MoreVideoDetails {
 
 
 export default async function VideoPage({ searchParams: { id } }: VideoPageType) {
+    if (id === undefined) redirect('/')
+
     const video = await axios.post('http://localhost:3333/videos/info', {
         provider: "youtube",
         url: `https://www.youtube.com/watch?v=${id}`
