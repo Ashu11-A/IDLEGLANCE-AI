@@ -2,7 +2,7 @@
 
 # IDLEGLANCE-AI
 
-![license-info](https://img.shields.io/github/license/Ashu11-A/IDLEGLANCE-AI?logo=gnu&style=for-the-badge&colorA=302D41&colorB=f9e2af&logoColor=f9e2af)
+![license-info](https://img.shields.io/github/license/Ashu11-A/IDLEGLANCE-AI?logo=mit&style=for-the-badge&colorA=302D41&colorB=f9e2af&logoColor=f9e2af)
 ![stars-info](https://img.shields.io/github/stars/Ashu11-A/IDLEGLANCE-AI?colorA=302D41&colorB=f9e2af&style=for-the-badge)
 
 ![Last-Comitt](https://img.shields.io/github/last-commit/Ashu11-A/IDLEGLANCE-AI?style=for-the-badge&colorA=302D41&colorB=b4befe)
@@ -12,6 +12,8 @@
 *Um projeto que visa criar uma plataforma similar a Netflix/YouTube para conteúdos específicos, com foco em funcionalidades avançadas de IA e personalização.*
 
 </div>
+
+Procurando a documentação da API? [veja aqui](https://github.com/Ashu11-A/IDLEGLANCE-AI/blob/main/api/README.md)
 
 ### Processamento de Vídeos
 - [ ] Baixar vídeos do YouTube (Os usuários poderão baixar o vídeo, mas diretamente do YouTube)
@@ -101,6 +103,7 @@ Contagem de:
 - nextjs
 - next-video
 - next-auth
+- next-themes
 - youtube-dl-exec
 - FFMPEG
 - python-shell
