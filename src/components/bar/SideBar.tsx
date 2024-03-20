@@ -1,5 +1,6 @@
 'use client'
-import { mdiCog, mdiHeart, mdiHomeVariant, mdiViewHeadline, mdiWhiteBalanceSunny } from '@mdi/js'
+import { useCollapsed } from '@/hooks/useCollapsed'
+import { mdiCog, mdiHeart, mdiHomeVariant, mdiWhiteBalanceSunny } from '@mdi/js'
 import { Icon } from '@mdi/react'
 import { motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
@@ -8,7 +9,7 @@ import { useState } from 'react'
 
 export function SideBar() {
   const [isAnimated, setIsAnimated] = useState<Record<string, boolean>>({})
-  const [isCollapsed, setIsCollapsed] = useState(true)
+  const { collapsed: isCollapsed } = useCollapsed()
   const pathName = usePathname()
   const router = useRouter()
 
@@ -34,7 +35,7 @@ export function SideBar() {
     },
     {
         path: '/for-you',
-        name: 'Para Voçê',
+        name: 'Para Você',
         icon: mdiHeart
     }
   ]
@@ -53,8 +54,13 @@ export function SideBar() {
   ]
 
   return (
-    <div className={`z-50 fixed rounded-r-3xl ${isCollapsed ? 'min-w-60' : 'max-w-14'} h-[100vh] flex flex-col justify-between bg-transparent`}>
-      <div className={`flex flex-col gap-1 p-2 mt-10 ${isCollapsed && 'mx-2'}  items-center justify-center`}>
+    <motion.div
+      className={`z-40 fixed rounded-r-3xl h-[100vh] flex flex-col justify-between bg-transparent`}
+      initial={{ width: isCollapsed ? '3.5rem' : '15rem' }}
+      animate={{ width: isCollapsed ? '15rem' : '3.5rem' }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className={`flex flex-col gap-1 mt-16 mx-2 items-center justify-center`}>
         {menuItens.map((item) => (
             <div
                 key={item.name}
@@ -75,7 +81,21 @@ export function SideBar() {
                     >
                     <Icon path={item.icon} size={1} />
                 </motion.div>
-                {isCollapsed && item.name}
+                <div className='text-nowrap'>
+                  {item.name.split('').map((letter, index) => (
+                    <motion.span
+                      key={index}
+                      initial={{ opacity: isCollapsed ? 0 : 1 }}
+                      animate={{ opacity: isCollapsed ? 1 : 0  }}
+                      transition={{
+                        duration: 0.25,
+                        delay: index / 25,
+                      }}
+                  >
+                    {letter}
+                  </motion.span>
+                  ))}
+                </div>
             </div>
         ))}
       </div>
@@ -100,12 +120,26 @@ export function SideBar() {
                     damping: 20
                 }}
                 >
-                <Icon path={item.icon} size={1} />
+                  <Icon path={item.icon} size={1} />
                 </motion.div>
-                {isCollapsed && item.name}
+                <div className='text-nowrap'>
+                  {item.name.split('').map((letter, index) => (
+                      <motion.span
+                        key={index}
+                        initial={{ opacity: isCollapsed ? 0 : 1 }}
+                        animate={{ opacity: isCollapsed ? 1 : 0  }}
+                        transition={{
+                          duration: 0.25,
+                          delay: index / 25,
+                        }}
+                    >
+                      {letter}
+                    </motion.span>
+                  ))}
+                </div>
             </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   )
 }
