@@ -7,7 +7,7 @@ import { useVisibilityChange } from "@uidotdev/usehooks"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useInView } from "react-intersection-observer"
 import ReactPlayer from "react-player"
-import { useAudio, useKeyPress, useKeyPressEvent } from 'react-use'
+import { useAudio, useKeyPress, useKeyPressEvent, useWindowSize } from 'react-use'
 import screenfull from 'screenfull'
 import ProgressBar from './ProgressBar'
 
@@ -30,6 +30,7 @@ export default function Player({ video, audio: urlAudio, thumbnail }: { video: s
     const [audio, state, controls] = useAudio({ src: urlAudio })
 
     const [MouseEnter, setMouseEnter] = useState(false)
+    const { height, width } = useWindowSize()
 
     // Data Collector
     const getScreenTime = useCallback(() => cataCollector.current.screenTime, [cataCollector])
@@ -124,13 +125,9 @@ export default function Player({ video, audio: urlAudio, thumbnail }: { video: s
 
     return (
         <div>
-            {inView && <p>Player em Tela</p>}
-            <p>Tempo na tela: {getScreenTime()}</p>
-            <p>Tempo assistindo: {getTimePlaying()}</p>
-            <p>{properties.current.playing ? 'Reproduzindo Video' : 'Video pausado'}</p>
-            <p>Volume Player: {properties.current.volume}</p>
-            <p>Volume Audio: {state.volume}</p>
-            {MouseEnter ? <p>Mouse em cima do player</p> : <p>Mouse fora do player</p>}
+            <div className={`blur-xl`}>
+                {playerRef?.current?.render()}
+            </div>
             <div
                 ref={refView}
                 className='flex w-[1280px] h-[720px] border-0 rounded-2xl relative overflow-hidden z-0'
@@ -140,6 +137,7 @@ export default function Player({ video, audio: urlAudio, thumbnail }: { video: s
             >
                 <ReactPlayer
                     ref={playerRef}
+
                     url={video}
                     className='react-player'
                     playing={properties.current.playing}
@@ -219,6 +217,13 @@ export default function Player({ video, audio: urlAudio, thumbnail }: { video: s
                     </div>
                 </div>
             </div>
+            {inView && <p>Player em Tela</p>}
+            <p>Tempo na tela: {getScreenTime()}</p>
+            <p>Tempo assistindo: {getTimePlaying()}</p>
+            <p>{properties.current.playing ? 'Reproduzindo Video' : 'Video pausado'}</p>
+            <p>Volume Player: {properties.current.volume}</p>
+            <p>Volume Audio: {state.volume}</p>
+            {MouseEnter ? <p>Mouse em cima do player</p> : <p>Mouse fora do player</p>}
         </div>
     )
 }

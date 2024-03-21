@@ -29,7 +29,7 @@ export default async function VideoPage({ searchParams: { id } }: VideoPageType)
       }).then((res) => res.data as ApiResponse)
 
     return (
-        <div className='flex justify-center items-center min-h-screen'>
+        <div className='flex mx-10 mt-14 min-h-screen'>
             <Player
                 video={video.bestQualityVideo.url}
                 audio={video.bestQualityAudio.url}
