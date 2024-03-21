@@ -1,9 +1,11 @@
 import { formatTime } from "@/functions/formatTime";
 import { MouseEvent, memo, useCallback, useRef, useState } from "react";
+import { Storyboards } from "./Storyboards";
 
 function ProgressBar({ currentTime, duration, seekTo }: { currentTime: number, duration: number, seekTo: (time: number) => void }) {    
     const [MouseEnter, setMouseEnter] = useState(false)
     const [timestamp, setTimestamp] = useState('')
+    const [time, setTime] = useState(0)
     const [mouseX, setMouseX] = useState(0)
 
     const progress = currentTime / duration * 100;
@@ -30,6 +32,7 @@ function ProgressBar({ currentTime, duration, seekTo }: { currentTime: number, d
         const formattedTime = formatTime(timeClick);
         
         if (timestamp !== formattedTime) {
+            setTime(timeClick)
             setTimestamp(formattedTime)
             console.log(formattedTime)
         }
@@ -60,15 +63,19 @@ function ProgressBar({ currentTime, duration, seekTo }: { currentTime: number, d
             <span
                 style={{
                     position: 'absolute',
-                    top: '-2rem',
-                    left: `${mouseX >= ((refDiv.current?.offsetWidth ?? 0) * 0.05) && mouseX <= ((refDiv.current?.offsetWidth ?? 0) * 0.92) ? `${mouseX}px` : mouseX <= ((refDiv.current?.offsetWidth ?? 0) * 0.92) ? '15px' : 'none'}`,
+                    top: '-9rem',
+                    left: `${mouseX >= ((refDiv.current?.offsetWidth ?? 0) * 0.05) && mouseX <= ((refDiv.current?.offsetWidth ?? 0) * 0.80) ? `${mouseX}px` : mouseX <= ((refDiv.current?.offsetWidth ?? 0) * 0.80) && 'auto'}`,
+                    right: `${mouseX <= ((refDiv.current?.offsetWidth ?? 0) * 0.80) ? 'auto' : '25px'}`,
                     color: 'white',
                     fontFamily: 'sans-serif',
                     fontSize: "14px",
                     fontWeight: '700'
                 }}
             >
-                {timestamp}
+                <div className={`flex flex-col justify-between items-center ${!MouseEnter && 'hidden'}`}>
+                    <Storyboards time={time} />
+                    {timestamp}
+                </div>
             </span>
         </div>
     )
