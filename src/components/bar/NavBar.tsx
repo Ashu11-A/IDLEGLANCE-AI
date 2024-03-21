@@ -8,16 +8,11 @@ export function NavBar() {
     const { toggleCollapsed } = useCollapsed()
     const router = useRouter()
 
-      const sideOpen = () => {
-        const sideBarInfo = (JSON.parse(localStorage.getItem('collapsed') ?? 'true') === true) ?? false
-        localStorage.setItem('collapsed', String(!sideBarInfo))
-        toggleCollapsed()
-      }
       const menuItens = [
           {
             name: 'sidebar',
             icon: mdiViewHeadline,
-            function: sideOpen
+            function: toggleCollapsed
           },
           {
             name: 'IDLEGLANCE',
@@ -26,7 +21,7 @@ export function NavBar() {
           }
         ]
     return (
-        <nav className="items-center p-2 absolute top-0 z-50 w-full">
+        <nav className="w-full bg-background/50 backdrop-blur-2xl items-center fixed top-0 p-2 z-50">
             <ul className="flex flex-row justify-between">
                 <div className="flex flex-row gap-5 tems-center">
                     {menuItens.map((item) => (
