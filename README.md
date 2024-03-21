@@ -57,7 +57,7 @@ Procurando a documentação da API? [veja aqui](https://github.com/Ashu11-A/IDLE
 
 ### UI:
 #### Dependências
-- [ ] Tailwindcss
+- [x] Tailwindcss
 - [ ] shacfn/ui
 - [ ] radix ui
 - [ ] MUI
@@ -67,9 +67,9 @@ Será parecido como uma homepage de Netflix/YouTube entre outros, terá uma cont
 Os vídeos serão catálogos com as coisas ditas abaixo, cada vídeo será processado individualmente, numa fila não assíncrona.
 As páginas dos vídeos terão uma UI clean e intuitiva, onde será possível baixar a legenda da música, baixar o vídeo ou a música, links de referência para Spotify, autor da música...
 
-- [ ] Modo escuro/claro
+- [x] Modo escuro/claro
 - [ ] Perfil do usuário
-- [ ] Páginas individuais para os vídeos
+- [x] Páginas individuais para os vídeos
 - [ ] Configurações (Qualidade, Linguagem, etc...)
 - [ ] Criação de timeline
 
