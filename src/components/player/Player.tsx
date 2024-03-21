@@ -10,9 +10,13 @@ import ReactPlayer from "react-player"
 import { useAudio, useKeyPress, useKeyPressEvent, useWindowSize } from 'react-use'
 import screenfull from 'screenfull'
 import ProgressBar from './ProgressBar'
+import { useVideo } from '@/hooks/useVideo'
+import { ApiResponse } from '@/app/video/page'
 
-export default function Player({ video, audio: urlAudio, thumbnail }: { video: string, audio: string, thumbnail: string }) {
+export default function Player(props: ApiResponse ){
+    const { bestQualityVideo: video, bestQualityAudio: audioAPI } = props
     const { ref: refView, inView } = useInView({ threshold: 1 })
+    const { setVideo } = useVideo()
     const playerRef = useRef<ReactPlayer>(null)
     const properties = useRef({
         progress: 0,
@@ -27,10 +31,9 @@ export default function Player({ video, audio: urlAudio, thumbnail }: { video: s
         timePlaying: 0
     })
 
-    const [audio, state, controls] = useAudio({ src: urlAudio })
+    const [audio, state, controls] = useAudio({ src: audioAPI.url })
 
     const [MouseEnter, setMouseEnter] = useState(false)
-    const { height, width } = useWindowSize()
 
     // Data Collector
     const getScreenTime = useCallback(() => cataCollector.current.screenTime, [cataCollector])
@@ -123,6 +126,10 @@ export default function Player({ video, audio: urlAudio, thumbnail }: { video: s
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inView, windowVisible])
 
+    useEffect(() => {
+        setVideo(props)
+    }, [props, setVideo])
+
     return (
         <div>
             {/* <div className={`blur-xl`}>
@@ -138,7 +145,7 @@ export default function Player({ video, audio: urlAudio, thumbnail }: { video: s
                 <ReactPlayer
                     ref={playerRef}
 
-                    url={video}
+                    url={video.url}
                     className='react-player'
                     playing={properties.current.playing}
                     muted={properties.current.muted}

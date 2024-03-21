@@ -1,3 +1,4 @@
+'use client'
 import { create } from 'zustand'
 
 interface UseCollapsedType {
@@ -6,15 +7,16 @@ interface UseCollapsedType {
 }
 
 const getInitialCollapsed = () => {
-    return localStorage?.getItem('sidebar-collapsed') === 'true' ? true : false
+    if (typeof window !== "undefined") {
+        return localStorage.getItem('sidebar-collapsed') === 'true' ? true : false
+    }
+    return false
 }
 
 export const useCollapsed = create<UseCollapsedType>((set) => ({
     collapsed: getInitialCollapsed(),
-    toggleCollapsed: () => {
-        set((state: UseCollapsedType) => {
-            localStorage.setItem('sidebar-collapsed', String(!state.collapsed))
-            return ({ collapsed: !state.collapsed})
-        })
-    }
+    toggleCollapsed: () => set((state: UseCollapsedType) => {
+        localStorage.setItem('sidebar-collapsed', String(!state.collapsed))
+        return ({ collapsed: !state.collapsed})
+    })
 }))

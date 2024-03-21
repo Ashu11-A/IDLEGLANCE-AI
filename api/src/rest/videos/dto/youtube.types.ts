@@ -44,3 +44,14 @@ export interface ThumbnailsData {
   width: number;
   height: number;
 }
+
+export interface StoryboardsData {
+  templateUrl: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+  columns: number;
+  rows: number;
+  thumbnailCount: number;
+  interval: number;
+  storyboardCount: number;
+}

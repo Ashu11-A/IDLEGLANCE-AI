@@ -12,7 +12,7 @@ interface VideoPageType {
     }
 }
 
-interface ApiResponse extends MoreVideoDetails {
+export interface ApiResponse extends MoreVideoDetails {
     bestThumbnail: ThumbnailsData
     bestQualityAudio: YoutubeVideoFormat,
     bestQualityVideo: YoutubeVideoFormat,
@@ -30,11 +30,7 @@ export default async function VideoPage({ searchParams: { id } }: VideoPageType)
 
     return (
         <div className='flex mx-10 mt-14 min-h-screen'>
-            <Player
-                video={video.bestQualityVideo.url}
-                audio={video.bestQualityAudio.url}
-                thumbnail={video.bestThumbnail.url}
-            />
+            <Player { ...video } />
       </div>
     )
 }
