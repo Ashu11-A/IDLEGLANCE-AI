@@ -125,9 +125,9 @@ export default function Player({ video, audio: urlAudio, thumbnail }: { video: s
 
     return (
         <div>
-            <div className={`blur-xl`}>
+            {/* <div className={`blur-xl`}>
                 {playerRef?.current?.render()}
-            </div>
+            </div> */}
             <div
                 ref={refView}
                 className='flex w-[1280px] h-[720px] border-0 rounded-2xl relative overflow-hidden z-0'
