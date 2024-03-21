@@ -47,7 +47,7 @@ function ProgressBar({ currentTime, duration, seekTo }: { currentTime: number, d
                 <div
                     className={`z-10 absolute top-0 ${MouseEnter ? 'h-2 -top-0.5' : 'h-1'} bg-white/60 transition-[height] ease-in-out duration-300`}
                     style={{
-                        width: `${mouseX >= ((refDiv.current?.offsetWidth ?? 0) * 0.05) && mouseX <= ((refDiv.current?.offsetWidth ?? 0) * 0.92) ? `${mouseX}px` : mouseX <= ((refDiv.current?.offsetWidth ?? 0) * 0.92) ? '15px' : 'none'}`,
+                        width: `${mouseX}px`,
                     }}
                 ></div>
                 <div
