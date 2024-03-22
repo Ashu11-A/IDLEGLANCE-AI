@@ -11,8 +11,7 @@ export function Cinematics({ time }: { time: number }): ReactElement {
 
     useEffect(() => {
         const newImage = findImage(time)
-        console.log('Cinematics mudou')
-        console.log(timestamp)
+        console.log('Cinematics mudou!')
         console.log(newImage)
         setImage(newImage)
     // eslint-disable-next-line react-hooks/exhaustive-deps
