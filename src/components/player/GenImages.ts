@@ -25,8 +25,8 @@ export async function GenImagem({ templateUrl, thumbnailWidth, thumbnailHeight, 
     const { width, height } = await imagemOriginal.metadata();
 
     // Calcula as dimensões de cada thumbnail
-    const larguraThumbnailFinal = width / columns;
-    const alturaThumbnailFinal = height / rows;
+    const larguraThumbnailFinal = (width ?? 0) / columns;
+    const alturaThumbnailFinal = (height ?? 0) / rows;
 
     const imagens: Images[] = []
 
@@ -35,7 +35,7 @@ export async function GenImagem({ templateUrl, thumbnailWidth, thumbnailHeight, 
         for (let col = 0; col < columns; col++) {
             const x = col * larguraThumbnailFinal;
             const y = row * alturaThumbnailFinal;
-            const time = col * 2 * (row + 1)
+            const time = ((row * 10) + col) * 2
 
             // Corta a miniatura
             const imageBuffer = await imagemOriginal
