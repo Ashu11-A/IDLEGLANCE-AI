@@ -12,11 +12,14 @@ import screenfull from 'screenfull'
 import ProgressBar from './ProgressBar'
 import { useVideo } from '@/hooks/useVideo'
 import { ApiResponse } from '@/app/video/page'
+import { useStoryboards } from '@/hooks/useStoryboards'
+import { Cinematics } from './Cinematics'
 
 export default function Player(props: ApiResponse ){
     const { bestQualityVideo: video, bestQualityAudio: audioAPI } = props
     const { ref: refView, inView } = useInView({ threshold: 1 })
     const { setVideo } = useVideo()
+    const { setStoryboards } = useStoryboards()
     const playerRef = useRef<ReactPlayer>(null)
     const properties = useRef({
         progress: 0,
@@ -128,13 +131,12 @@ export default function Player(props: ApiResponse ){
 
     useEffect(() => {
         setVideo(props)
-    }, [props, setVideo])
+        setStoryboards(props)
+    }, [props, setStoryboards, setVideo])
 
     return (
         <div>
-            {/* <div className={`blur-xl`}>
-                {playerRef?.current?.render()}
-            </div> */}
+            <Cinematics time={properties.current.progress} />
             <div
                 ref={refView}
                 className='flex w-[1280px] h-[720px] border-0 rounded-2xl relative overflow-hidden z-0'
