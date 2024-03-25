@@ -2,7 +2,7 @@
 import { useCollapsed } from '@/hooks/useCollapsed'
 import { mdiCog, mdiHeart, mdiHomeVariant, mdiWhiteBalanceSunny } from '@mdi/js'
 import { Icon } from '@mdi/react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -86,19 +86,28 @@ export function SideBar() {
                   <Icon path={item.icon} size={1} />
               </motion.div>
               <div className='text-nowrap'>
-                {item.name.split('').map((letter, index) => (
-                  <motion.span
-                    key={index}
-                    initial={{ opacity: isCollapsed ? 0 : 1 }}
-                    animate={{ opacity: isCollapsed ? 1 : 0  }}
-                    transition={{
-                      duration: 0.25,
-                      delay: index / 25,
-                    }}
-                >
-                  {letter}
-                </motion.span>
-                ))}
+                <AnimatePresence>
+                    {isCollapsed && item.name.split('').map((letter, index) => (
+                      <motion.span
+                        key={index}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                          duration: 0.25,
+                          delay: index / 25,
+                        }}
+                        exit={{
+                          opacity: 0,
+                          transition: {
+                            duration: 0.20,
+                            delay: index / 50,
+                          }
+                        }}
+                    >
+                      {letter}
+                    </motion.span>
+                    ))}
+                </AnimatePresence>
               </div>
           </div>
         ))}
@@ -129,19 +138,28 @@ export function SideBar() {
                   <Icon path={item.icon} size={1} />
                 </motion.div>
                 <div className='text-nowrap'>
-                  {item.name.split('').map((letter, index) => (
-                      <motion.span
-                        key={index}
-                        initial={{ opacity: isCollapsed ? 0 : 1 }}
-                        animate={{ opacity: isCollapsed ? 1 : 0  }}
-                        transition={{
-                          duration: 0.25,
-                          delay: index / 25,
-                        }}
-                    >
-                      {letter}
-                    </motion.span>
-                  ))}
+                  <AnimatePresence>
+                      {isCollapsed && item.name.split('').map((letter, index) => (
+                        <motion.span
+                          key={index}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{
+                            duration: 0.25,
+                            delay: index / 25,
+                          }}
+                          exit={{
+                            opacity: 0,
+                            transition: {
+                              duration: 0.20,
+                              delay: index / 50,
+                            }
+                          }}
+                      >
+                        {letter}
+                      </motion.span>
+                      ))}
+                  </AnimatePresence>
                 </div>
             </div>
           )

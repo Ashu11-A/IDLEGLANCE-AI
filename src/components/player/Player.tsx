@@ -11,18 +11,19 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useInView } from "react-intersection-observer"
 import ReactPlayer from "react-player"
-import { useAudio, useKeyPress, useKeyPressEvent } from 'react-use'
+import { useAudio, useKeyPress, useKeyPressEvent, useWindowSize } from 'react-use'
 import screenfull from 'screenfull'
 import { Cinematics } from './Cinematics'
 import ProgressBar from './ProgressBar'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from '../ui/dropdown-menu'
 
 export default function Player(props: ApiResponse ){
-    const { bestQualityVideo: video, bestQualityAudio: audioAPI } = props
+    const { bestQualityVideo: video, bestQualityAudio: audioAPI, streamingData } = props
     const { ref: refView, inView } = useInView({ threshold: 1 })
     const [playing, setPlaying] = useState(false)
     const { setVideo } = useVideo()
     const { setStoryboards } = useStoryboards()
+    const { height, width } = useWindowSize()
     const playerRef = useRef<ReactPlayer>(null)
     const properties = useRef({
         progress: 0,
@@ -39,6 +40,7 @@ export default function Player(props: ApiResponse ){
     const [audio, state, controls] = useAudio({ src: audioAPI.url })
 
     const [MouseEnter, setMouseEnter] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false)
 
     // Data Collector
     const getScreenTime = useCallback(() => cataCollector.current.screenTime, [cataCollector])
@@ -163,8 +165,8 @@ export default function Player(props: ApiResponse ){
                     }}
                     pip={properties.current.pip}
                     onDisablePIP={() => properties.current.pip = false}
-                    width={1280}
-                    height={720}
+                    width={width}
+                    height={height}
                     style={{ zIndex: 0, position: 'absolute' }}
                     onBuffer={() => {console.log('Buffering...'); controls.pause()}}
                     onStart={() => console.log('Starting...')}
@@ -180,7 +182,7 @@ export default function Player(props: ApiResponse ){
                 <div className='grid grid-rows-2 grid-cols-1 h-full w-full'>
                     <div onClick={() => play()} className='z-10 row-span-2 w-full h-full'></div>
                     <AnimatePresence>
-                        {MouseEnter &&
+                        {(MouseEnter || modalOpen) &&
                             <motion.div
                                 className={`w-full relative row-span-1`}
                                 initial={{ opacity: 0 }}
@@ -238,9 +240,14 @@ export default function Player(props: ApiResponse ){
                                         >
                                             <Icon color={'white'} path={mdiFullscreen} size={'2rem'} />
                                         </button>
-                                        <DropdownMenu>
+                                        <DropdownMenu
+                                            onOpenChange={(value) => setModalOpen(value)}
+                                        >
                                             <DropdownMenuTrigger><Icon path={mdiCog} size={1} /></DropdownMenuTrigger>
-                                            <DropdownMenuContent>Teste</DropdownMenuContent>
+                                            <DropdownMenuContent>
+                                                <DropdownMenuLabel>Velocidade de Reprodução</DropdownMenuLabel>
+                                                <DropdownMenuLabel>Qualidade</DropdownMenuLabel>
+                                            </DropdownMenuContent>
                                         </DropdownMenu>
                                     </div>
                                 </div>
@@ -256,7 +263,7 @@ export default function Player(props: ApiResponse ){
             <p>Volume Player: {properties.current.volume}</p>
             <p>Volume Audio: {state.volume}</p>
             {MouseEnter ? <p>Mouse em cima do player</p> : <p>Mouse fora do player</p>}
-            <pre>{JSON.stringify(state, null, 2)}</pre>
+            <pre>{JSON.stringify(streamingData, null, 2)}</pre>
         </div>
     )
 }
