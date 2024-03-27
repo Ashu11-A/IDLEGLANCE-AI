@@ -16,6 +16,18 @@ import screenfull from 'screenfull'
 import { Cinematics } from './Cinematics'
 import ProgressBar from './ProgressBar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"  
+import { Button } from '../ui/button'
 
 export default function Player(props: ApiResponse ){
     const { bestQualityVideo: video, bestQualityAudio: audioAPI, streamingData } = props
@@ -26,6 +38,7 @@ export default function Player(props: ApiResponse ){
     const { height, width } = useWindowSize()
     const playerRef = useRef<ReactPlayer>(null)
     const properties = useRef({
+        url: video.url,
         progress: 0,
         duration: 0,
         volume: 1,
@@ -137,6 +150,13 @@ export default function Player(props: ApiResponse ){
         setStoryboards(props)
     }, [props, setStoryboards, setVideo])
 
+    useEffect(() => {
+        controls.seek(properties.current.progress)
+        seekTo(properties.current.progress)
+        // controls.play()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [properties.current.url])
+
     return (
         <div>
             <Cinematics time={properties.current.progress} />
@@ -149,7 +169,7 @@ export default function Player(props: ApiResponse ){
             >
                 <ReactPlayer
                     ref={playerRef}
-                    url={video.url}
+                    url={properties.current.url}
                     className='react-player'
                     playing={playing}
                     muted={properties.current.muted}
@@ -165,8 +185,8 @@ export default function Player(props: ApiResponse ){
                     }}
                     pip={properties.current.pip}
                     onDisablePIP={() => properties.current.pip = false}
-                    width={width}
-                    height={height}
+                    width={1280}
+                    height={720}
                     style={{ zIndex: 0, position: 'absolute' }}
                     onBuffer={() => {console.log('Buffering...'); controls.pause()}}
                     onStart={() => console.log('Starting...')}
@@ -224,7 +244,7 @@ export default function Player(props: ApiResponse ){
                                                 } size={'2rem'} />}
                                         </button>
                                     </div>
-                                    <div className='flex gap-5 justify-end'>
+                                    <div className='flex flex-row gap-5 justify-end'>
                                         <button
                                             onClick={pipToggle}
                                             className='flex items-center'
@@ -236,17 +256,39 @@ export default function Player(props: ApiResponse ){
                                         </button>
                                         <button
                                             onClick={onClickFullscreen}
-                                            className='flex mr-5 items-center'
+                                            className='flex items-center'
                                         >
                                             <Icon color={'white'} path={mdiFullscreen} size={'2rem'} />
                                         </button>
                                         <DropdownMenu
                                             onOpenChange={(value) => setModalOpen(value)}
                                         >
-                                            <DropdownMenuTrigger><Icon path={mdiCog} size={1} /></DropdownMenuTrigger>
+                                            <DropdownMenuTrigger className='mr-5'><Icon path={mdiCog} size={1} /></DropdownMenuTrigger>
                                             <DropdownMenuContent>
+                                                <DropdownMenuLabel>
+                                                    <AlertDialog>
+                                                        <AlertDialogTrigger className='w-full h-full text-start'>Qualidade</AlertDialogTrigger>
+                                                        <AlertDialogContent>
+                                                            <AlertDialogHeader>
+                                                                <AlertDialogTitle>Quality Video</AlertDialogTitle>
+                                                                <AlertDialogDescription>
+                                                                    <div className='grid grid-cols-2 gap-5'>
+                                                                        {streamingData.map(({ qualityLabel, fps, mimeType, url }) => {
+                                                                            if (mimeType.includes('audio')) return null
+                                                                            const regex = /codecs=\"([^\\"]+)\"/g
+                                                                            return (
+                                                                                <AlertDialogAction key={qualityLabel} onClick={() => {properties.current.url = url, controls.pause()}}>
+                                                                                    {`${qualityLabel} [${fps} fps] [${regex.exec(mimeType)?.[1].split('.')[0]}]`}
+                                                                                </AlertDialogAction>
+                                                                            )
+                                                                        })}
+                                                                    </div>
+                                                                </AlertDialogDescription>
+                                                            </AlertDialogHeader>
+                                                        </AlertDialogContent>
+                                                    </AlertDialog>
+                                                </DropdownMenuLabel>
                                                 <DropdownMenuLabel>Velocidade de Reprodução</DropdownMenuLabel>
-                                                <DropdownMenuLabel>Qualidade</DropdownMenuLabel>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     </div>
