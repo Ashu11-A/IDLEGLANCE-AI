@@ -244,7 +244,7 @@ export default function Player(props: ApiResponse ){
                                                 } size={'2rem'} />}
                                         </button>
                                     </div>
-                                    <div className='flex flex-row gap-5 justify-end'>
+                                    <div className='flex flex-row gap-5 mr-5 justify-end'>
                                         <button
                                             onClick={pipToggle}
                                             className='flex items-center'
@@ -263,7 +263,7 @@ export default function Player(props: ApiResponse ){
                                         <DropdownMenu
                                             onOpenChange={(value) => setModalOpen(value)}
                                         >
-                                            <DropdownMenuTrigger className='mr-5'><Icon path={mdiCog} size={1} /></DropdownMenuTrigger>
+                                            <DropdownMenuTrigger><Icon path={mdiCog} size={1} /></DropdownMenuTrigger>
                                             <DropdownMenuContent>
                                                 <DropdownMenuLabel>
                                                     <AlertDialog>
