@@ -34,7 +34,7 @@ Procurando a documentação da API? [veja aqui](https://github.com/Ashu11-A/IDLE
 
 ### API
 #### Dependências
-- [ ] FastAPI (python)
+- [x] FastAPI (python)
 - [x] Nestjs (javascript)
 - [ ] @nestjs/bull (javascript)
 - [ ] Redis
@@ -44,11 +44,11 @@ Procurando a documentação da API? [veja aqui](https://github.com/Ashu11-A/IDLE
 #### Sumary
 - [x] Banco de dados GraphQL/Rest com Prisma
 - [x] Tabela de: Usuários, Vídeos...
-- [ ] Integração com Python para IA
+- [x] Integração com Python para IA
 
 ### Detecção
 - [ ] Língua do áudio (com reconhecimento de mudanças ao longo da música)
-- [ ] Tipo de conteúdo (Anime or Real life)
+- [x] Tipo de conteúdo (Anime or Real life)
 - [ ] Personagens, e personagens principais representados (Banco de imagens)
 
 ### Legendas
@@ -58,7 +58,7 @@ Procurando a documentação da API? [veja aqui](https://github.com/Ashu11-A/IDLE
 ### UI:
 #### Dependências
 - [x] Tailwindcss
-- [ ] shacfn/ui
+- [x] shacfn/ui
 - [ ] radix ui
 - [ ] MUI
 #### Sumary
@@ -126,59 +126,60 @@ Contagem de:
 ### Referências:
 
 #### Upscale:
-https://github.com/upscayl/upscayl-ncnn
+- [ ] https://github.com/upscayl/upscayl-ncnn
 
 #### Queue:
-https://medium.com/yavar/nestjs-queues-c8040ca61b79
+- [ ] https://medium.com/yavar/nestjs-queues-c8040ca61b79
 
 #### YouTube API:
-https://developers.google.com/youtube
-https://github.com/LuanRT/YouTube.js
+- [ ] https://developers.google.com/youtube
+- [ ] https://github.com/LuanRT/YouTube.js
 
-#### Timeline: https://github.com/xzdarcy/react-timeline-editor
+#### Timeline:
+- [ ] https://github.com/xzdarcy/react-timeline-editor
 
 #### Search Anime:
-https://github.com/soruly/trace.moe
+- [ ] https://github.com/soruly/trace.moe
 
 #### Detect anime:
-https://github.com/hysts/anime-face-detector
-https://huggingface.co/antonioglass/real-or-anime-age
+- [ ] ~https://github.com/hysts/anime-face-detector~
+- [x] https://huggingface.co/antonioglass/real-or-anime-age
 
 #### Detect gender anime:
-https://huggingface.co/DOFOFFICIAL/animeGender-dvgg-0.7
+- [ ] https://huggingface.co/DOFOFFICIAL/animeGender-dvgg-0.7
 
 #### Transcription OCR:
- https://github.com/naptha/tesseract.js
- https://github.com/JaidedAI/EasyOCR
+- [ ] https://github.com/naptha/tesseract.js
+- [ ] https://github.com/JaidedAI/EasyOCR
 
 #### Detect Language:
-https://github.com/wooorm/franc
-https://github.com/JohnSnowLabs/spark-nlp
-https://huggingface.co/speechbrain/lang-id-voxlingua107-ecapa
+- [ ] https://github.com/wooorm/franc
+- [ ] https://github.com/JohnSnowLabs/spark-nlp
+- [ ] https://huggingface.co/speechbrain/lang-id-voxlingua107-ecapa
 
 #### Detect type song:
-https://huggingface.co/ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition
+- [ ] https://huggingface.co/ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition
 
 #### Segmentation song:
-https://huggingface.co/pyannote/segmentation
-https://huggingface.co/pyannote/speaker-diarization-3.1
+- [ ] https://huggingface.co/pyannote/segmentation
+- [ ] https://huggingface.co/pyannote/speaker-diarization-3.1
 
 #### Similar Text:
-https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
+- [ ] https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
 
 #### Similar Image:
-https://github.com/tomasrasymas/simimg
-https://github.com/visual-layer/fastdup
-https://github.com/shibing624/similarities
-https://github.com/adumrewal/SIFTImageSimilarity
+- [ ] https://github.com/tomasrasymas/simimg
+- [ ] https://github.com/visual-layer/fastdup
+- [ ] https://github.com/shibing624/similarities
+- [ ] https://github.com/adumrewal/SIFTImageSimilarity
 
 #### Similar song:
-https://github.com/itsbrunodev/similar-songs
-https://github.com/iammordaty/assistant-web
+- [ ] https://github.com/itsbrunodev/similar-songs
+- [ ] https://github.com/iammordaty/assistant-web
 
 #### Detect typography:
-https://github.com/prnvdixit/Pyfont
-https://github.com/robinreni96/Font_Recognition-DeepFont
-https://github.com/frobertpixto/font-from-image
-https://github.com/lkmidas/Font-Detection
-https://github.com/JeffersonQin/YuzuMarker.FontDetection
+- [ ] https://github.com/prnvdixit/Pyfont
+- [ ] https://github.com/robinreni96/Font_Recognition-DeepFont
+- [ ] https://github.com/frobertpixto/font-from-image
+- [ ] https://github.com/lkmidas/Font-Detection
+- [ ] https://github.com/JeffersonQin/YuzuMarker.FontDetection
