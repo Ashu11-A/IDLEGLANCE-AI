@@ -1,13 +1,38 @@
 from typing import Dict, List, TypedDict
 from fastapi import APIRouter, UploadFile, HTTPException
+import librosa
+import numpy
 from pydantic import BaseModel
-from transformers import pipeline
+from transformers import pipeline, AutoModelForSpeechSeq2Seq, AutoProcessor, AutomaticSpeechRecognitionPipeline
 from PIL import Image
 from sentence_transformers import SentenceTransformer, util
+import torch
+from datasets import load_dataset
+import torchaudio
+from speechbrain.inference.classifiers import EncoderClassifier
 
+detectLanguage = EncoderClassifier.from_hparams(source="speechbrain/lang-id-voxlingua107-ecapa", savedir="tmp")
 detectAnimeContent = pipeline("image-classification", model="antonioglass/real-or-anime-age")
 detectSimilarityText = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 detectAdultText = pipeline("text-classification", model="lazyghost/bert-large-uncased-Adult-Text-Classifier")
+detectEmotionRecognition = pipeline("audio-classification", model="ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition")
+
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
+torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
+
+TranscriptModelId = "distil-whisper/distil-large-v3"
+TranscriptAudioModel = AutoModelForSpeechSeq2Seq.from_pretrained(TranscriptModelId, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True)
+TranscriptAudioModel.to(device)
+processor = AutoProcessor.from_pretrained(TranscriptModelId)
+TranscriptPipe = pipeline(
+    "automatic-speech-recognition",
+    model=TranscriptAudioModel,
+    tokenizer=processor.tokenizer,
+    feature_extractor=processor.feature_extractor,
+    max_new_tokens=128,
+    torch_dtype=torch_dtype,
+    device=device,
+)
 
 router = APIRouter(
     prefix="/process",
@@ -28,7 +53,7 @@ async def processThumb(img: UploadFile | None):
     if not img:
         raise HTTPException(status_code=404, detail='Image not Found')
     if isinstance(img, UploadFile) and img.content_type not in imagesAllow:
-        raise HTTPException(status_code=403, detail='File type not allowed')
+        raise HTTPException(status_code=401, detail='File type not allowed')
 
     imgType = img.src if isinstance(img, ImageInput) else Image.open(img.file)
 
@@ -132,3 +157,47 @@ async def detectAdultContent(body: ValidateContent):
         }
     ]
 
+audioAllow = {
+    "audio/opus",
+    "audio/webm",
+    "audio/mpeg",
+    "audio/aac"
+}
+
+@router.post('/transcript')
+async def TranscriptAudio(audio: UploadFile | None):
+    if audio is None:
+        raise HTTPException(status_code=404, detail='Audio not specified')
+    if audio.content_type not in audioAllow:
+        raise HTTPException(status_code=401, detail='File type not allowed')
+
+    audioArray, sample_rate = librosa.load(audio.file, mono=False, sr=16_000)
+    result = TranscriptPipe(audioArray[0])
+    print(result["text"])
+    return result
+
+@router.post('/language')
+async def DetectLanguage(audio: UploadFile | None):
+    if audio is None:
+        raise HTTPException(status_code=404, detail='Audio not specified')
+    if audio.content_type not in audioAllow:
+        raise HTTPException(status_code=401, detail='File type not allowed')
+
+    signal = detectLanguage.load_audio("speechbrain/lang-id-voxlingua107-ecapa/udhr_th.wav")
+    prediction =  detectLanguage.classify_batch(signal)
+    print(prediction)
+    print(prediction[1].exp())
+    print(prediction[3])
+    emb =  detectLanguage.encode_batch(signal)
+    print(emb.shape)
+    return prediction
+
+@router.post('/audio')
+def ProcessAudio(audio: UploadFile | None):
+    if audio is None:
+        raise HTTPException(status_code=404, detail='Audio not specified')
+    
+    if audio.content_type not in audioAllow:
+        raise HTTPException(status_code=401, detail='File type not allowed')
+    print(detectEmotionRecognition)
+    return 'hello'
