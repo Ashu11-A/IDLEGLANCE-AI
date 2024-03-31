@@ -15,6 +15,9 @@
 
 Procurando a documentação da API? [veja aqui](https://github.com/Ashu11-A/IDLEGLANCE-AI/blob/main/api/README.md)
 
+### ⚠️ Aviso
+Esse projeto foi totalmente feito em um workspace Linux, não há garantias que funcione sendo executado em Windows.
+
 ### Processamento de Vídeos
 - [ ] Baixar vídeos do YouTube (Os usuários poderão baixar o vídeo, mas diretamente do YouTube)
 - [ ] Processamento local dos vídeos (OCR - AI - Metadata) (Nenhum vídeo será salvo após o processamento! Apenas seus metadados)
