@@ -1,2 +1,6 @@
+*.mp3
+*.wav
+
 .venv
 __pycache__
+tmp

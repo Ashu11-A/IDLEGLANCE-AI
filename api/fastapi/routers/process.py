@@ -1,14 +1,11 @@
 from typing import Dict, List, TypedDict
 from fastapi import APIRouter, UploadFile, HTTPException
 import librosa
-import numpy
 from pydantic import BaseModel
-from transformers import pipeline, AutoModelForSpeechSeq2Seq, AutoProcessor, AutomaticSpeechRecognitionPipeline
+from transformers import pipeline, AutoModelForSpeechSeq2Seq, AutoProcessor
 from PIL import Image
 from sentence_transformers import SentenceTransformer, util
 import torch
-from datasets import load_dataset
-import torchaudio
 from speechbrain.inference.classifiers import EncoderClassifier
 
 detectLanguage = EncoderClassifier.from_hparams(source="speechbrain/lang-id-voxlingua107-ecapa", savedir="tmp")

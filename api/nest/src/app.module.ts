@@ -2,13 +2,15 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AuthModule } from './graphql/auth/auth.module';
 import { UsersModule } from './graphql/users/users.module';
 import { PrismaModules } from './prisma/prisma.modules';
+import { AudioModule } from './queue/audio/audio.module';
+import { ImageModule } from './queue/image/image.module';
+import { VideoModule } from './queue/video/video.module';
 import { UploadModule } from './rest/upload/upload.module';
-import { AuthModule } from './graphql/auth/auth.module';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { VideosModule } from './rest/videos/videos.module';
 
 @Module({
   imports: [
@@ -28,7 +30,9 @@ import { VideosModule } from './rest/videos/videos.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    VideosModule,
+    VideoModule,
+    AudioModule,
+    ImageModule,
   ],
 })
 export class AppModule {}

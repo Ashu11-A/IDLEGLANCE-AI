@@ -46,18 +46,17 @@ model SimilarThumbnails {
   videos Video[]
 }
 
-model Tags {
-  id      Int    @id @unique @default(autoincrement())
-  uuid    String @unique @default(uuid())
-  name    String
-  Video   Video? @relation(fields: [videoId], references: [id])
-  videoId Int?
+model Keywords {
+  id    Int     @id @unique @default(autoincrement())
+  uuid  String  @unique @default(uuid())
+  name  String  @unique
+  Video Video[]
 }
 
 model Language {
   id     Int     @id @unique @default(autoincrement())
   uuid   String  @unique @default(uuid())
-  name   String // [ 'en-Us' ]
+  name   String  @unique // [ 'en-Us' ]
   videos Video[]
 }
 
@@ -76,32 +75,36 @@ model Characters {
 }
 
 model Video {
-  id   Int    @id @unique @default(autoincrement())
-  uuid String @unique @default(uuid())
-
-  name        String
-  thumbnail   String
-  description String
-  tags        Tags[]
-  youtubeId   Int    @unique
-
-  maxQuality     String // 1920x1080
-  language       Language[]
-  subtitle       String
-  subtitleSource String
-
-  musicAuthor String
-  musicStyle  String
-
-  videoEditor String
-  editStyle   String
-
-  animes     Animes[]
-  characters Characters[]
-  isAnime    Boolean      @default(true)
-
+  id                 Int                @id @unique @default(autoincrement())
+  uuid               String             @unique @default(uuid())
+  youtubeId          String             @unique
+  // Informações gerais do vídeo
+  title              String
+  description        String
+  lengthSeconds      Int
+  isFamilySafe       Boolean
+  category           String
+  publishDate        DateTime
+  createDate         DateTime           @default(now())
+  thumbnail          String?
+  keywords           Keywords[]
+  // Detalhes técnicos
+  maxQuality         String? // Ex: 1920x1080
+  language           Language[]
+  subtitle           String?
+  subtitleSource     String?
+  // Música do vídeo
+  musicAuthor        String?
+  musicStyle         String?
+  // Edição do vídeo
+  videoEditor        String?
+  editStyle          String?
+  // Animações
+  animes             Animes[]
+  characters         Characters[]
+  isAnime            Boolean?           @default(true)
+  // Vídeos relacionados
   similarThumbnailId Int?
-
-  player            Player[]
-  SimilarThumbnails SimilarThumbnails? @relation(fields: [similarThumbnailId], references: [id])
+  player             Player[]
+  SimilarThumbnails  SimilarThumbnails? @relation(fields: [similarThumbnailId], references: [id])
 }

@@ -7,6 +7,6 @@ interface UseVideoType {
 }
 
 export const useVideo = create<UseVideoType >((set) => ({
-    video: undefined,
-    setVideo: (video) => set((prev) => ({ ...prev, video }))
+  video: undefined,
+  setVideo: (video) => set((prev) => ({ ...prev, video }))
 }))
