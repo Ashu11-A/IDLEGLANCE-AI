@@ -88,6 +88,13 @@ export class VideoService {
   private async getInfo(url: string) {
     const isValid = validateURL(url);
 
+    if (isValid) return (await getInfo(url)).videoDetails;
+    throw new HttpException('URL not Valid', HttpStatus.BAD_REQUEST);
+  }
+
+  async genStream(url: string) {
+    const isValid = validateURL(url);
+
     if (isValid) {
       const videoinfo = await getInfo(url);
       const adaptiveFormats = videoinfo.player_response.streamingData
@@ -119,8 +126,6 @@ export class VideoService {
       });
 
       return {
-        ...videoinfo.videoDetails,
-        availableCountries: undefined,
         bestQualityAudio,
         bestQualityVideo,
         bestThumbnail,

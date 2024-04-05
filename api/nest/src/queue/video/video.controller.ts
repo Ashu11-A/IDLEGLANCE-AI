@@ -20,6 +20,11 @@ export class VideoController {
     return this.videoService.create(url);
   }
 
+  @Post(':id')
+  getInfo(@Param('id') id: string) {
+    return this.videoService.genStream(`https://www.youtube.com/watch?v=${id}`);
+  }
+
   @Get()
   findAll() {
     return this.videoService.findAll();

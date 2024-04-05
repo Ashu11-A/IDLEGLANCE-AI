@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/app/video/page'
 import { GenImagem } from '@/components/player/GenImages'
-import { StoryboardsImages } from '@/components/player/Player.d'
+import { StoryboardsImages } from '@/components/player/Player'
 import { create } from 'zustand'
 
 interface UseStoryboardsType {

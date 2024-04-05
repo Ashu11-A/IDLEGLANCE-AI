@@ -3,6 +3,9 @@
 import WatchMetadata from "@/components/player/WatchMetadata"
 import { redirect } from 'next/navigation'
 import { YoutubeVideoFormat } from "../../../api/nest/dist/rest/videos/dto/youtube.types"
+import Player from "@/components/player/Player"
+import { headers } from 'next/headers'
+import axios from "axios"
 
 interface VideoPageType {
     searchParams: {
@@ -36,14 +39,13 @@ export interface Video {
   similarThumbnailId: number | null;
 }
 
-
 export default async function VideoPage({ searchParams: { id } }: VideoPageType) {
+  // const header = headers()
+  // const ip = (header.get('X-Forwarded-For') ?? '127.0.0.1').split(',')[0]
   if (id === undefined) redirect('/')
-  // const stream: Stream[] = {}
-
   return (
     <div className='flex mx-10 mt-14 min-h-screen'>
-      {/* <Player { ...stream[1] } /> */}
+      <Player id={id} />
       <WatchMetadata id={id} />
     </div>
   )

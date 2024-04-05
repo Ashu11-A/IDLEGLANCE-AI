@@ -2,7 +2,7 @@ import { useStoryboards } from "@/hooks/useStoryboards";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ReactElement, useEffect, useState } from "react";
-import { StoryboardsImages } from "./Player.d";
+import { StoryboardsImages } from "./Player";
 
 export function Cinematics({ time }: { time: number }): ReactElement {
   const [image, setImage] = useState<StoryboardsImages | undefined>(undefined)
