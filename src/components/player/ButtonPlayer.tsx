@@ -11,16 +11,16 @@ interface ButtonPlayerType {
 }
 
 export function ButtonPlayer({ icon, iconActive, actived, key, keyFunction }: ButtonPlayerType) {
-    useKeyPressEvent(key, () => keyFunction())
-    return (
-        <button
-            className='mx-5'
-            onClick={keyFunction}
-        >
-            {actived
-            ? <Icon color={'white'} path={iconActive ?? mdiAlertCircleOutline} size={'2rem'} />
-            : <Icon color={'white'} path={icon} size={'2rem'} />
-        }
-        </button>
-    )
+  useKeyPressEvent(key, () => keyFunction())
+  return (
+    <button
+      className='mx-5'
+      onClick={keyFunction}
+    >
+      {actived
+        ? <Icon color={'white'} path={iconActive ?? mdiAlertCircleOutline} size={'2rem'} />
+        : <Icon color={'white'} path={icon} size={'2rem'} />
+      }
+    </button>
+  )
 }

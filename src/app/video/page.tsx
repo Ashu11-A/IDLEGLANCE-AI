@@ -1,11 +1,8 @@
 'use server'
 
-import Player from "@/components/player/Player"
-import axios from "axios"
-import { MoreVideoDetails } from 'ytdl-core'
-import { redirect } from 'next/navigation'
-import { ThumbnailsData, YoutubeVideoFormat } from "../../../api/nest/dist/rest/videos/dto/youtube.types"
 import WatchMetadata from "@/components/player/WatchMetadata"
+import { redirect } from 'next/navigation'
+import { YoutubeVideoFormat } from "../../../api/nest/dist/rest/videos/dto/youtube.types"
 
 interface VideoPageType {
     searchParams: {
