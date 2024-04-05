@@ -40,7 +40,7 @@ Esse projeto foi totalmente feito em um workspace Linux, não há garantias que 
 - [x] FastAPI (python)
 - [x] Nestjs (javascript)
 - [ ] @nestjs/bull (javascript)
-- [ ] Redis
+- [x] Redis
 #### Database
 - GraphQL
 - Prisma
@@ -103,28 +103,24 @@ Contagem de:
 - Python >= 3.7
 
 ### Dependências:
-- nextjs
-- next-video
-- next-auth
-- next-themes
-- youtube-dl-exec
-- FFMPEG
-- python-shell
-- Tensorflow or Pytorch [python]
-- React Hook Form
+- [x] nextjs
+- [ ] next-auth
+- [x] next-themes
+- [x] Tensorflow or Pytorch [python]
+- [ ] React Hook Form
 #### Test
-- JestJS
-- React Testing Library
-- Cypress
+- [ ] JestJS
+- [ ] React Testing Library
+- [ ] Cypress
 #### Animation
-- Framer Motion
+- [x] Framer Motion
 #### Charts
-- Recharts
-- React Chartjs 2
+- [ ] Recharts
+- [ ] React Chartjs 2
 #### Cache
-- Zustand
-- Context API
-- React Query
+- [x] Zustand
+- [ ] Context API
+- [x] React Query
 
 ### Referências:
 
@@ -133,10 +129,6 @@ Contagem de:
 
 #### Queue:
 - [ ] https://medium.com/yavar/nestjs-queues-c8040ca61b79
-
-#### YouTube API:
-- [ ] https://developers.google.com/youtube
-- [ ] https://github.com/LuanRT/YouTube.js
 
 #### Timeline:
 - [ ] https://github.com/xzdarcy/react-timeline-editor
