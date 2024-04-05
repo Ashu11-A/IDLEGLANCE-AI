@@ -7,7 +7,7 @@ import { useState } from "react"
 
 export default function WatchMetadata({ id }: { id: string}) {
   const [showMore, setShowMore] = useState(false)  
-  const { data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: [id],
     queryFn: () => axios.get(`/internal/video/${id}`).then((res) => res.data as Video),
     refetchOnWindowFocus: false
@@ -40,7 +40,7 @@ export default function WatchMetadata({ id }: { id: string}) {
 
   return (
     <div className="w-full h-full flex flex-col gap-5">
-      <div className="flex flex-row h-6 w-96">
+      <div className="flex flex-row h-6 w-full">
         {data === undefined
           ? <Skeleton className="w-full h-full rounded-full" />
           : <p className="text-start font-semibold text-xl">{data.title.replace('[Lyrics x AMV]', '')}</p>}
