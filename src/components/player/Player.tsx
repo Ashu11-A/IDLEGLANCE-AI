@@ -27,6 +27,7 @@ import { ThumbnailsData, YoutubeVideoFormat } from "../../../api/nest/src/rest/v
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Cinematics } from './Cinematics'
 import ProgressBar from './ProgressBar'
+import { PlayerRef } from './Player.d'
 
 export default function Player({ id }: { id: string }){
   const { data: streams } = useQuery({
@@ -46,8 +47,10 @@ export default function Player({ id }: { id: string }){
   const { setStoryboards } = useStoryboards()
   const { height, width } = useWindowSize()
   const playerRef = useRef<ReactPlayer>(null)
-  const properties = useRef({
-    url: streams?.bestQualityVideo.url,
+  const properties = useRef<PlayerRef>({
+    url: undefined,
+    width: undefined,
+    height: undefined,
     progress: 0,
     duration: 0,
     volume: 1,
@@ -59,7 +62,7 @@ export default function Player({ id }: { id: string }){
     timePlaying: 0
   })
 
-  const [audio, state, controls] = useAudio({ src: streams?.bestQualityAudio.url })
+  const [audio, state, controls] = useAudio({ src: streams?.bestQualityAudio.url ?? '' })
 
   const [MouseEnter, setMouseEnter] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
@@ -156,8 +159,11 @@ export default function Player({ id }: { id: string }){
 
   useEffect(() => {
     setVideo(streams)
-    setStoryboards(streams)
-  }, [streams, setStoryboards, setVideo])
+    setStoryboards(streams),
+    properties.current.url = streams?.bestQualityVideo.url
+    properties.current.width = streams?.bestQualityVideo.width
+    properties.current.height = streams?.bestQualityVideo.height
+  }, [streams])
 
   useEffect(() => {
     controls.seek(properties.current.progress)
@@ -171,7 +177,7 @@ export default function Player({ id }: { id: string }){
       <Cinematics time={properties.current.progress} />
       <div
         ref={refView}
-        className='flex w-[1280px] h-[720px] border-0 rounded-2xl relative overflow-hidden z-0'
+        className='flex w-1/4 h-1/4 border-0 rounded-2xl relative overflow-hidden z-0'
         onMouseEnter={() => setMouseEnter(true)}
         onMouseLeave={() => setMouseEnter(false)}
         tabIndex={0}
@@ -194,8 +200,8 @@ export default function Player({ id }: { id: string }){
           }}
           pip={properties.current.pip}
           onDisablePIP={() => properties.current.pip = false}
-          width={1280}
-          height={720}
+          width={width / 4}
+          height={height / 4}
           style={{ zIndex: 0, position: 'absolute' }}
           onBuffer={() => {console.log('Buffering...'); controls.pause()}}
           onStart={() => console.log('Starting...')}
